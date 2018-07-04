@@ -1,2 +1,2 @@
 # hmaInventory
-php-sql
+For Huron Music Association.
