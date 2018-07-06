@@ -1,2 +1,2 @@
-# hmaInventory
-For Huron Music Association's inventory system.
+# hma
+Huron Music Association's inventory system php frontend.
