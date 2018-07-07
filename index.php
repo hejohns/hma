@@ -6,9 +6,9 @@
 //site settings
       $domain="http://tempestj.ddns.net";
       echo "<p>
-    <a href='" . $domain . "/?value=0' class='button'>Button 0</a> " .
-    "<a href='" . $domain . "/?value=1' class='button'>Button 1</a> " . 
-    "<a href='" . $domain . "/?value=2' class='button'>Button 2</a>" . 
+    <a href='" . $domain . "/?value=0' class='button'>Home</a> " .
+    "<a href='" . $domain . "/?value=1' class='button'>List All Students</a> " . 
+    "<a href='" . $domain . "/?value=2' class='button'>List Inventory</a>" . 
     "</p>";
     ?>
     <style>
@@ -38,7 +38,11 @@
     ?>
   </p>
     <form action="form.php" method="get">
-      <input type="text" name="value" id="value" value="value">
+      <select name="init">
+       <option init="1">New Entry</option>
+       <option init="2">Delete Entry</option>
+       <option init="3">Search Entry</option>
+      </select>
       <input type="text" name="name" id="name" value="name">
       <input type="text" name="size" id="size" value="size">
       <input type="submit">
@@ -75,8 +79,9 @@
         }
 //button 2
       if ($_Get["value"] == 2){
-        $sql = "INSERT INTO `loaned` (`name`, `size`) VALUES ($name,$size)";
-        echo $sql;
+        $sql = "SELECT COUNT(*) FROM loaned";
+        $result = $conn->query($sql);
+        echo "$result";
         }
 //close connection
       $conn->close();
