@@ -39,9 +39,9 @@
   </p>
     <form action="form.php" method="get">
       <select name="init">
-       <option init="1">New Entry</option>
-       <option init="2">Delete Entry</option>
-       <option init="3">Search Entry</option>
+       <option value="1">New Entry</option>
+       <option value="2">Delete Entry</option>
+       <option value="3">Search Entry</option>
       </select>
       <input type="text" name="name" id="name" value="name">
       <input type="text" name="size" id="size" value="size">
