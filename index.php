@@ -78,10 +78,13 @@
           }
         }
 //button 2
-      if ($_Get["value"] == 2){
-        $sql = "SELECT COUNT(*) FROM loaned";
-        $result = $conn->query($sql);
-        echo "$result";
+      if ($_GET["value"] == 2){
+        $sql = "SELECT * FROM loaned";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $stmt->store_result();
+        echo "<p>Number of entries: " . $stmt->num_rows() . "<?p>";
+        $stmt->close();
         }
 //close connection
       $conn->close();
