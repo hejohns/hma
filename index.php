@@ -2,31 +2,47 @@
   <p> DO NOT REFRESH PAGE OR PRESS BACK/FORWARDS BUTTONS </p>
   <head>
   <title>PHP Test</title>
-    <a href="http://tempestj.ddns.net/?value=0" class="button">Button 0</a>
-    <a href="http://tempestj.ddns.net/?value=1" class="button">Button 1</a>
-    <a href="http://tempestj.ddns.net/?value=2" class="button">Button 2</a>
+    <?php
+//site settings
+      $domain="http://tempestj.ddns.net";
+      echo "<p>
+    <a href='" . $domain . "/?value=0' class='button'>Button 0</a> " .
+    "<a href='" . $domain . "/?value=1' class='button'>Button 1</a> " . 
+    "<a href='" . $domain . "/?value=2' class='button'>Button 2</a>" . 
+    "</p>";
+    ?>
     <style>
-    a.button {
+      a.button {
         -webkit-appearance: button;
         -moz-appearance: button;
         appearance: button;
         text-decoration: none;
         color: initial;
         }
+      body {
+        background-color: ivory;
+        text-align: center;
+        }
+      p {
+        text-align: center;
+        }
+     form {
+      display: inline-block;
+      }
       </style>
   </head>
   <p>
     <?php
       $value=0;
-      $name="dude";
-      $size="s";
       echo 'value = ' . htmlspecialchars($_GET["value"]). "\n";
     ?>
   </p>
-  <p>
-    <input type="text" name="name" value="<?php echo htmlspecialchars($name); ?>" />
-    <input type="text" name="size" value="<?php echo htmlspecialchars($size); ?>" />
-  </p>
+    <form action="form.php" method="get">
+      <input type="text" name="value" id="value" value="value">
+      <input type="text" name="name" id="name" value="name">
+      <input type="text" name="size" id="size" value="size">
+      <input type="submit">
+    </form>
   <body>
     <?php
       $servername = "localhost";
@@ -41,7 +57,7 @@
         }
 //button 0
       if ($_GET["value"] == 0){
-        echo "HMA Inventory Management System Homepage";
+        echo "<p> HMA Inventory Management System Homepage </p>";
         }
 //button 1
       if ($_GET["value"] == 1){
@@ -57,7 +73,7 @@
           echo "0 results";
           }
         }
-//button 3
+//button 2
       if ($_Get["value"] == 2){
         $sql = "INSERT INTO `loaned` (`name`, `size`) VALUES ($name,$size)";
         echo $sql;
