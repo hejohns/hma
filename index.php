@@ -1,7 +1,7 @@
 <html>
   <p> DO NOT REFRESH PAGE OR PRESS BACK/FORWARDS BUTTONS </p>
   <head>
-  <title>PHP Test</title>
+  <title>HMA Inventory System</title>
     <?php
 //site settings
       $domain="http://tempestj.ddns.net";
