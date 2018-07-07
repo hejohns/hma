@@ -20,7 +20,10 @@
       }
       </style>
   </head>
-  <?php
-    echo "form.php under construction."; 
-  ?>
+  <body>
+    <?php
+      echo "form.php under construction."; 
+      echo "<p>" . $_GET["init"] . $_GET["name"] . $_GET["size"] . "</p>";
+    ?>
+  </body>
 </html>
