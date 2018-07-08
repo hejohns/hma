@@ -16,7 +16,7 @@ if($user == $indexUsername
 {
         include("../main.php");
 }
-if($user == $indexUsername
+elseif($user == $indexUsername
 && $pass == $indexPassword
 && $_POST['indexInit'] == "2")
 {
