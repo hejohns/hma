@@ -63,7 +63,7 @@
 //button 1
       if ($_POST["value"] == 1){
         $sql = "SELECT * FROM loaned";
-        $result = $conn->query($sql);
+        /*$result = $conn->query($sql);
         if ($result->num_rows > 0) {
           // output data of each row
           while($row = $result->fetch_assoc()) {
@@ -74,6 +74,16 @@
           echo "0 results";
           }
         }
+        */
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $stmt->store_result();
+        $row = $stmt->fetch_row();
+        for ($intI = 0; $intI = $intI + 1; $intI < $stmt->field_count();) {
+          echo $row[$intI];
+           }
+        
+        $stmt->close();
 //button 2
       if ($_POST["value"] == 2){
         $sql = "SELECT * FROM loaned";
