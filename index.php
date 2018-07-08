@@ -1,5 +1,6 @@
 <html>
 <body>
+<link rel="stylesheet" type="text/css" href="../style.css">
 <?php
 include "../config.php";
 $user = $_POST['usern'];
