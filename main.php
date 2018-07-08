@@ -4,13 +4,13 @@
   <title>HMA Inventory System</title>
     <?php
       include "config.php";
-      echo "
+      echo '
       <form action="main.php" method="post">
         <button name="0" value="value">Home</button>
         <button name="1" value="value">List all entries</button>
         <button name="2" value="value">Number of entries</button>
       </form>
-      ";
+      ';
     ?>
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
