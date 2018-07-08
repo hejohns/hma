@@ -6,10 +6,20 @@
       include "config.php";
       echo '
       <form action="index.php" method="POST">
-        <button name=' . '"usern=' . "$indexUsername" . '&passw=' . "$indexPassword&"  . '"'. 'value="0">Home</button>
-        <button name=' . '"usern=' . "$indexUsername" . '&passw=' . "$indexPassword&" . '"' . 'value="1">List all entries</button>
-        <button name=' . '"usern=' . "$indexUsername" . '&passw=' . "$indexPassword&" . '"' . 'value="2">Number of entries</button>
+        <input type="hidden" name="field" value="fieldname"/>
+        <input type="hidden" name="orderby" value="<?= $orderby ?>"/>
+        <button name ="submit" value="1" type="submit">&#9660;</button>
       </form>
+      <form action="index.php" method="POST">
+        <input type="hidden" name="field" value="fieldname"/>
+        <input type="hidden" name="orderby" value="<?= $orderby ?>"/>
+        <button name ="submit" value="1" type="submit">&#9660;</button>
+      </form>
+      <form action="index.php" method="POST">
+        <input type="hidden" name="field" value="fieldname"/>
+        <input type="hidden" name="orderby" value="<?= $orderby ?>"/>
+        <button name ="submit" value="1" type="submit">&#9660;</button>
+      </form>      
       ';
     ?>
     <link rel="stylesheet" type="text/css" href="style.css">
