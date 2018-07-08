@@ -6,20 +6,20 @@
       include "config.php";
       echo '
       <form action="index.php" method="POST">
-        <input type="hidden" name="usern" value=' . "$indexUsername" . '/>
-        <input type="hidden" name="passw" value=' . "$indexPassword" . '/>
+        <input type="hidden" name="usern" value="' . "$indexUsername" . '"/>
+        <input type="hidden" name="passw" value="' . "$indexPassword" . '"/>
         <input type="hidden" name="value" value="0"/>
         <button name ="submit" value="1" type="submit">Home</button>
       </form>
       <form action="index.php" method="POST">
-        <input type="hidden" name="usern" value=' . "$indexUsername" . '/>
-        <input type="hidden" name="passw" value=' . "$indexPassword" . '/>
+        <input type="hidden" name="usern" value="' . "$indexUsername" . '"/>
+        <input type="hidden" name="passw" value="' . "$indexPassword" . '"/>
         <input type="hidden" name="value" value="1"/>
         <button name ="submit" value="1" type="submit">List all entries</button>
       </form>
       <form action="index.php" method="POST">
-        <input type="hidden" name="usern" value=' . "$indexUsername" . '/>
-        <input type="hidden" name="passw" value=' . "$indexPassword" . '/>
+        <input type="hidden" name="usern" value="' . "$indexUsername" . '"/>
+        <input type="hidden" name="passw" value="' . "$indexPassword" . '"/>
         <input type="hidden" name="value" value="2"/>
         <button name ="submit" value="1" type="submit">Number of entries</button>
       </form>      
