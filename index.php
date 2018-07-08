@@ -1,11 +1,12 @@
 <html>
 <body>
 <?php
+include "../config.php";
 $user = $_POST['usern'];
 $pass = $_POST['passw'];
 
-if($user == "hma"
-&& $pass == "fairfieldpass")
+if($user == $username
+&& $pass == $password)
 {
         include("../main.php");
 }
