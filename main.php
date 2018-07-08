@@ -10,7 +10,7 @@
       $password = "";
       $dbname = "";
       echo "
-      <form action="" method="post">
+      <form action="main.php" method="post">
         <button name="0" value="value">Home</button>
         <button name="1" value="value">List all entries</button>
         <button name="2" value="value">Number of entries</button>
@@ -25,7 +25,7 @@
       echo 'value = ' . htmlspecialchars($_POST["value"]). "\n";
     ?>
   </p>
-    <form action="form.php" method="get">
+    <form action="html/form.php" method="post">
       <select name="init">
        <option value="1">New Entry</option>
        <option value="2">Delete Entry</option>
