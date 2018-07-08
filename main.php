@@ -31,8 +31,8 @@
        <option value="2">Delete Entry</option>
        <option value="3">Search Entry</option>
       </select>
-      <input type="text" name="name" id="name" value="name">
-      <input type="text" name="size" id="size" value="size">
+      Name<input type="text" name="name" id="name" value="">
+      Size<input type="text" name="size" id="size" value="">
       <input type="submit">
     </form>
   <body>
