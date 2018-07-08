@@ -8,18 +8,21 @@
       <form action="index.php" method="POST">
         <input type="hidden" name="usern" value="' . "$indexUsername" . '"/>
         <input type="hidden" name="passw" value="' . "$indexPassword" . '"/>
+        <input type="hidden" name="indexInit" value=1 />
         <input type="hidden" name="value" value="0"/>
         <button name ="submit" value="1" type="submit">Home</button>
       </form>
       <form action="index.php" method="POST">
         <input type="hidden" name="usern" value="' . "$indexUsername" . '"/>
         <input type="hidden" name="passw" value="' . "$indexPassword" . '"/>
+        <input type="hidden" name="indexInit" value=1 />
         <input type="hidden" name="value" value="1"/>
         <button name ="submit" value="1" type="submit">List all entries</button>
       </form>
       <form action="index.php" method="POST">
         <input type="hidden" name="usern" value="' . "$indexUsername" . '"/>
         <input type="hidden" name="passw" value="' . "$indexPassword" . '"/>
+        <input type="hidden" name="indexInit" value=1 />
         <input type="hidden" name="value" value="2"/>
         <button name ="submit" value="1" type="submit">Number of entries</button>
       </form>      
@@ -33,12 +36,13 @@
       echo 'value = ' . htmlspecialchars($_POST["value"]). "\n";
     ?>
   </p>
-    <form action="html/form.php" method="POST">
+    <form action="index.php" method="POST">
       <select name="init">
        <option value="1">New Entry</option>
        <option value="2">Delete Entry</option>
        <option value="3">Search Entry</option>
       </select>
+      <input type="hidden" name="indexInit" value=2 />
       Name<input type="text" name="name" id="name" value="">
       Size<input type="text" name="size" id="size" value="">
       <input type="submit">
