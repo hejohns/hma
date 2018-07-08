@@ -28,7 +28,6 @@
       </form>      
       ';
     ?>
-    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <p>
     <?php
