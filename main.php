@@ -3,12 +3,7 @@
   <head>
   <title>HMA Inventory System</title>
     <?php
-//site settings
-      $domain="";
-      $servername = "localhost";
-      $username = "";
-      $password = "";
-      $dbname = "";
+      include "config.php";
       echo "
       <form action="main.php" method="post">
         <button name="0" value="value">Home</button>
