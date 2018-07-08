@@ -43,6 +43,8 @@
        <option value="3">Search Entry</option>
       </select>
       <input type="hidden" name="indexInit" value="2" />
+      <input type="hidden" name="usern" value="' . "$indexUsername" . '"/>
+      <input type="hidden" name="passw" value="' . "$indexPassword" . '"/>
       Name<input type="text" name="name" id="name" value="">
       Size<input type="text" name="size" id="size" value="">
       <input type="submit">
