@@ -5,10 +5,10 @@
     <?php
       include "config.php";
       echo '
-      <form action="main.php" method="post">
-        <button name="0" value="value">Home</button>
-        <button name="1" value="value">List all entries</button>
-        <button name="2" value="value">Number of entries</button>
+      <form action="index.php" method="POST">
+        <button name=' . '"usern=' . "$indexUsername" . '&passw=' . "$indexPassword&"  . '"'. 'value="0">Home</button>
+        <button name=' . '"usern=' . "$indexUsername" . '&passw=' . "$indexPassword&" . '"' . 'value="1">List all entries</button>
+        <button name=' . '"usern=' . "$indexUsername" . '&passw=' . "$indexPassword&" . '"' . 'value="2">Number of entries</button>
       </form>
       ';
     ?>
@@ -20,7 +20,7 @@
       echo 'value = ' . htmlspecialchars($_POST["value"]). "\n";
     ?>
   </p>
-    <form action="html/form.php" method="post">
+    <form action="html/form.php" method="POST">
       <select name="init">
        <option value="1">New Entry</option>
        <option value="2">Delete Entry</option>
