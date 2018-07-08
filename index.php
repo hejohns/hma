@@ -4,7 +4,11 @@
   <title>HMA Inventory System</title>
     <?php
 //site settings
-      $domain="http://tempestj.ddns.net";
+      $domain="";
+      $servername = "localhost";
+      $username = "";
+      $password = "";
+      $dbname = "";
       echo "<p>
     <a href='" . $domain . "/?value=0' class='button'>Home</a> " .
     "<a href='" . $domain . "/?value=1' class='button'>List All Students</a> " . 
@@ -31,10 +35,6 @@
     </form>
   <body>
     <?php
-      $servername = "localhost";
-      $username = "hma";
-      $password = "fairfieldpass";
-      $dbname = "hma";
 // Create connection
       $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
