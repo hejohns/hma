@@ -5,8 +5,8 @@ include "../config.php";
 $user = $_POST['usern'];
 $pass = $_POST['passw'];
 
-if($user == $username
-&& $pass == $password)
+if($user == $indexUsername
+&& $pass == $indexPassword)
 {
         include("../main.php");
 }
