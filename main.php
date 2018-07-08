@@ -36,7 +36,7 @@
     ?>
   </p>
     <form action="index.php" method="POST">
-      <select name="init">
+      <select name="formInit">
        <option value="1">New Entry</option>
        <option value="2">Delete Entry</option>
        <option value="3">Search Entry</option>
