@@ -9,18 +9,20 @@
       $username = "";
       $password = "";
       $dbname = "";
-      echo "<p>
-    <a href='" . $domain . "/?value=0' class='button'>Home</a> " .
-    "<a href='" . $domain . "/?value=1' class='button'>List All Students</a> " . 
-    "<a href='" . $domain . "/?value=2' class='button'>List Inventory</a>" . 
-    "</p>";
+      echo "
+      <form action="" method="post">
+        <button name="0" value="value">Home</button>
+        <button name="1" value="value">List all entries</button>
+        <button name="2" value="value">Number of entries</button>
+      </form>
+      ";
     ?>
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <p>
     <?php
       $value=0;
-      echo 'value = ' . htmlspecialchars($_GET["value"]). "\n";
+      echo 'value = ' . htmlspecialchars($_POST["value"]). "\n";
     ?>
   </p>
     <form action="form.php" method="get">
@@ -42,11 +44,11 @@
         die("Connection failed: " . $conn->connect_error);
         }
 //button 0
-      if ($_GET["value"] == 0){
+      if ($_POST["value"] == 0){
         echo "<p> HMA Inventory Management System Homepage </p>";
         }
 //button 1
-      if ($_GET["value"] == 1){
+      if ($_POST["value"] == 1){
         $sql = "SELECT * FROM loaned";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
@@ -60,7 +62,7 @@
           }
         }
 //button 2
-      if ($_GET["value"] == 2){
+      if ($_POST["value"] == 2){
         $sql = "SELECT * FROM loaned";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
