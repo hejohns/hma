@@ -12,13 +12,13 @@ $pass = $_POST['passw'];
 
 if($user == $indexUsername
 && $pass == $indexPassword
-&& $_POST['indexInit'] == 1)
+&& $_POST['indexInit'] == "1")
 {
         include("../main.php");
 }
 if($user == $indexUsername
 && $pass == $indexPassword
-&& $_POST['indexInit'] == 2)
+&& $_POST['indexInit'] == "2")
 {
         include("../form.php");
 }
