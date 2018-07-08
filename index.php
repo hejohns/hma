@@ -24,7 +24,7 @@ elseif($user == $indexUsername
 }
 else
 {
-        if(isset($_POST))
+        elseif(isset($_POST))
         {
 
 echo '
