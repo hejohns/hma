@@ -6,7 +6,8 @@
    $dbUsername = "";
    $dbPassword = "";
    $dbName = "";
-   $tableName = "";
+   $loanedTableName = "";
    $indexUsername = "";
    $indexPassword = "";
+   $loaned = $loanedTableName;
 ?>
