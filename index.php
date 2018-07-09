@@ -32,8 +32,8 @@ else
 echo '
             <form method="POST" action="index.php">
             <input type="hidden" name="indexInit" value="1" />
-            User <input type="text" name="usern"></input><br>
-            Pass <input type="password" name="passw"></input><br>
+            Username <input type="text" name="usern"></input><br>
+            Password <input type="password" name="passw"></input><br>
             <input type="submit" name="submit" value="Submit"></input>
             </form>
 ';
