@@ -6,6 +6,7 @@
    $dbUsername = "";
    $dbPassword = "";
    $dbName = "";
+   $tableName = "";
    $indexUsername = "";
    $indexPassword = "";
 ?>
