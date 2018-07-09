@@ -17,14 +17,14 @@
         <input type="hidden" name="passw" value="' . "$indexPassword" . '"/>
         <input type="hidden" name="indexInit" value="1" />
         <input type="hidden" name="value" value="1"/>
-        <button name ="submit" value="1" type="submit">List all entries</button>
+        <button name ="submit" value="1" type="submit">Number of entries</button>
       </form>
       <form action="index.php" method="POST">
         <input type="hidden" name="usern" value="' . "$indexUsername" . '"/>
         <input type="hidden" name="passw" value="' . "$indexPassword" . '"/>
         <input type="hidden" name="indexInit" value="1" />
         <input type="hidden" name="value" value="2"/>
-        <button name ="submit" value="1" type="submit">Number of entries</button>
+        <button name ="submit" value="1" type="submit">List all entries</button>
       </form>
       <form action="index.php" method="POST">
         <input type="hidden" name="usern" value="' . "$indexUsername" . '"/>
@@ -71,29 +71,6 @@
         }
 //button 1
       if ($_POST["value"] == 1){
-        $sql = "SHOW COLUMNS FROM $loaned";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0){
-        echo '<table>';
-        while ($row = $result->fetch_assoc()){
-                echo '<td><table>';
-                $column = $row["Field"];
-                $sql2 = "SELECT $column FROM $loaned";
-                $result2 = $conn->query($sql2);
-                echo '<tr><td>' . $column . '</td></tr>';
-                while ($row2 = $result2->fetch_assoc()){
-                        echo '<tr><td>' . $row2[$column] . '</td></tr>';
-                }
-                echo '</table></td>';
-        }
-        echo '</table>';
-        }
-        else {
-                echo "0 results";
-        }
-      }
-//button 2
-      if ($_POST["value"] == 2){
         $sql = "SELECT * FROM $loaned";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
@@ -101,11 +78,47 @@
         echo "<p>Number of entries: " . $stmt->num_rows() . "<?p>";
         $stmt->close();
       }
+//button 2
+      if ($_POST["value"] == 2){
+              $sql = "SELECT * FROM $loaned";
+              $result = $conn->query($sql);
+              echo '<table>';
+                      $sql2 = "SHOW COLUMNS FROM $loaned";
+                      $result2 = $conn->query($sql2);
+                      echo '<tr>';
+                      while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row2["Field"];
+                              echo '</td>';
+                      }
+                      echo '</tr>';
+              while ($row = $result->fetch_assoc()){
+                      $sql2 = "SHOW COLUMNS FROM $loaned";
+                      $result2 = $conn->query($sql2);
+                      echo '<tr>';
+                      while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row[$row2["Field"]];
+                              echo '</td>';
+                      }
+                      echo '</tr>';
+              }
+              echo '</table>';
+      }
 //button 3
       if ($_POST["value"] == 3) {
               $sql = "SELECT * FROM $loaned ORDER BY name";
               $result = $conn->query($sql);
               echo '<table>';
+                      $sql2 = "SHOW COLUMNS FROM $loaned";
+                      $result2 = $conn->query($sql2);
+                      echo '<tr>';
+                      while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row2["Field"];
+                              echo '</td>';
+                      }
+                      echo '</tr>';
               while ($row = $result->fetch_assoc()){
                       $sql2 = "SHOW COLUMNS FROM $loaned";
                       $result2 = $conn->query($sql2);
