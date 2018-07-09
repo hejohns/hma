@@ -33,8 +33,8 @@
     <?php
       $value=0;
       echo 'value = ' . htmlspecialchars($_POST["value"]). "\n";
-    ?>
-  </p>
+      echo '  
+    </p>
     <form action="index.php" method="POST">
       <select name="formInit">
        <option value="1">New Entry</option>
@@ -42,12 +42,13 @@
        <option value="3">Search Entry</option>
       </select>
       <input type="hidden" name="indexInit" value="2" />
-      <input type="hidden" name="usern" value="' . "$indexUsername" . '"/>
+      <input type="hidden" name="usern" value="' .  "$indexUsername" . '"/>
       <input type="hidden" name="passw" value="' . "$indexPassword" . '"/>
       Name<input type="text" name="name" id="name" value="">
       Size<input type="text" name="size" id="size" value="">
       <input type="submit">
-    </form>
+    </form>';
+    ?>
   <body>
     <?php
 // Create connection
@@ -62,28 +63,27 @@
         }
 //button 1
       if ($_POST["value"] == 1){
-        $sql = "SELECT * FROM loaned";
-        /*$result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-          // output data of each row
-          while($row = $result->fetch_assoc()) {
-            echo "<p>" . "Name: " . $row["name"]. " | size: " . $row["size"] . "</p>";
-            }
-          } 
-        else {
-          echo "0 results";
-          }
+        $sql = "SHOW COLUMNS FROM loaned";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0){
+        echo '<table>';
+        while ($row = $result->fetch_assoc()){
+                echo '<td><table>';
+                $column = $row["Field"];
+                $sql2 = "SELECT $column FROM loaned";
+                $result2 = $conn->query($sql2);
+                echo '<tr><td>' . $column . '</td></tr>';
+                while ($row2 = $result2->fetch_assoc()){
+                        echo '<tr><td>' . $row2[$column] . '</td></tr>';
+                }
+                echo '</table></td>';
         }
-        */
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $stmt->store_result();
-        $row = $stmt->fetch_row();
-        for ($intI = 0; $intI = $intI + 1; $intI < $stmt->field_count();) {
-          echo $row[$intI];
-           }
-        
-        $stmt->close();
+        echo '</table>';
+        }
+        else {
+                echo "0 results";
+        }
+      }
 //button 2
       if ($_POST["value"] == 2){
         $sql = "SELECT * FROM loaned";
