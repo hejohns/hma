@@ -16,15 +16,17 @@ if($user == $indexUsername
 {
         include("../main.php");
 }
-elseif($user == $indexUsername
+else
+{
+        
+       if($user == $indexUsername
 && $pass == $indexPassword
 && $_POST['indexInit'] == "2")
 {
         include("../form.php");
 }
-else
-{
-        if(isset($_POST))
+        else{
+                if(isset($_POST))
         {
 
 echo '
@@ -35,7 +37,8 @@ echo '
             <input type="submit" name="submit" value="Submit"></input>
             </form>
 ';
-}
+                }
+        }
 }
 ?>
 </body>
