@@ -36,7 +36,8 @@ else
                         $lines += substr_count(fread($f, 8192), "\n");
                 }
                 fclose($f);
-                
+                $logSuccess = fopen("../logSuccess.txt");
+                fread($logSuccess, );
                 if (!($lines > 50)){
 
 echo '
