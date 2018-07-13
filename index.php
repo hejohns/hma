@@ -26,6 +26,18 @@ else
         include("../form.php");
 }
         else {
+                $log = fopen("../log.txt", 'a');
+                $txt = $_SERVER['REMOTE_ADDR'] . "\n";
+                fwrite($log, $txt);
+                fclose($log);
+                $log = fopen("../log.txt", 'r');
+                $lines = 0;
+                while (!feof($f)) {
+                        $lines += substr_count(fread($f, 8192), "\n");
+                }
+                fclose($f);
+                
+                if (!($lines > 50)){
 
 echo '
             <form method="POST" action="index.php">
@@ -34,7 +46,9 @@ echo '
             Password <input type="password" name="passw"></input><br>
             <input type="submit" name="submit" value="Submit"></input>
             </form>
-';
+';     
+                }
+
         }
 }
 ?>
