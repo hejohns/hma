@@ -25,9 +25,7 @@ else
 {
         include("../form.php");
 }
-        else{
-                if(isset($_POST))
-        {
+        else {
 
 echo '
             <form method="POST" action="index.php">
@@ -37,7 +35,6 @@ echo '
             <input type="submit" name="submit" value="Submit"></input>
             </form>
 ';
-                }
         }
 }
 ?>
