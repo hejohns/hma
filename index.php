@@ -30,16 +30,19 @@ else
                 $txt = $_SERVER['REMOTE_ADDR'] . "\n";
                 fwrite($log, $txt);
                 fclose($log);
-                $log = fopen("../log.txt", 'r');
+                $log2 = fopen("../log.txt", 'r');
                 $lines = 0;
-                while (!feof($f)) {
-                        $lines += substr_count(fread($f, 8192), "\n");
+                while (!feof($log2)) {
+                        $lines += substr_count(fread($log2, 8192), "\n");
                 }
-                fclose($f);
-                $logSuccess = fopen("../logSuccess.txt");
-                $timeOfLastLogIn = fread($logSuccess, 8192);
-                if ((time() - $timeOfLastLogin > 10) && file_exists('../logSuccess.txt')) {unlink('../logSuccess.txt');}
-                if (!($lines > 50)){
+                fclose($log2);
+             //   echo $lines;
+            //    $logSuccess = fopen("../logSuccess.txt", 'w');
+             //   $timeOfLastLogIn = fread($logSuccess, 8192);
+           //     echo time();
+          //      if ((time() - $timeOfLastLogIn > 10) && file_exists("../logSuccess.txt")) {unlink("../logSuccess.txt");}
+           //     if (!($lines > 50))
+                {
 
 echo '
             <form method="POST" action="index.php">
