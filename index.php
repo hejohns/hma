@@ -60,7 +60,7 @@ echo '
                                 $logFailure = fopen("../logFailed.txt", 'w');
                                 $txt = time();
                                 fwrite($logFailure, $txt);
-                                $lastFailed = fread("../logFailed.txt", 8192);
+                                $lastFailed = fread($logFailure, 8192);
                                 fclose($logFailure);
                                 
                         }
