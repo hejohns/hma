@@ -37,10 +37,12 @@ else
                 }
                 fclose($log2);
                 echo $lines;
+                $createLogSuccess = fopen("../logSuccess.txt", 'a');
+                fclose($createLogSuccess);
                 $logSuccess = fopen("../logSuccess.txt", 'r');
                 $timeOfLastLogIn = fread($logSuccess, 8192);
+                fclose($logSuccess);
                 echo time();
-                if ((time() - $timeOfLastLogIn > 10) && file_exists("../logSuccess.txt")) {$reset = fopen("../log.txt", 'w'); fclose($reset);}
                 if (!($lines > 50))
                 {
 
@@ -52,6 +54,18 @@ echo '
             <input type="submit" name="submit" value="Submit"></input>
             </form>
 ';     
+                }
+                else{
+                        if ($lines < 60) {
+                                $logFailure = fopen("../logFailed", 'w');
+                                $txt = time();
+                                fwrite($logFailure, $txt);
+                                $lastFailed = fread("../logFailed", 8192);
+                                fclose($logFailure);
+                                
+                        }
+                        
+                        if ((time() - $lastFailed) > 60) {$reset = fopen("../log.txt", 'w'); fclose($reset);}
                 }
 
         }
