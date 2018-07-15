@@ -36,12 +36,12 @@ else
                         $lines += substr_count(fread($log2, 8192), "\n");
                 }
                 fclose($log2);
-             //   echo $lines;
-            //    $logSuccess = fopen("../logSuccess.txt", 'w');
-             //   $timeOfLastLogIn = fread($logSuccess, 8192);
-           //     echo time();
-          //      if ((time() - $timeOfLastLogIn > 10) && file_exists("../logSuccess.txt")) {unlink("../logSuccess.txt");}
-           //     if (!($lines > 50))
+                echo $lines;
+                $logSuccess = fopen("../logSuccess.txt", 'w');
+                $timeOfLastLogIn = fread($logSuccess, 8192);
+                echo time();
+                if ((time() - $timeOfLastLogIn > 10) && file_exists("../logSuccess.txt")) {unlink("../logSuccess.txt");}
+                if (!($lines > 50))
                 {
 
 echo '
