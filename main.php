@@ -4,7 +4,7 @@
   <title>HMA Inventory System</title>
     <?php
       include "config.php";
-      $logSuccess = fopen("logSuccess.txt", 'w');
+      $logSuccess = fopen("../logSuccess.txt", 'w');
       fclose($logSucess);
       $txt = time();
       fwrite($logSuccess, $txt);
