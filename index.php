@@ -37,7 +37,7 @@ else
                 }
                 fclose($log2);
                 echo $lines;
-                $logSuccess = fopen("../logSuccess.txt", 'w');
+                $logSuccess = fopen("../logSuccess.txt", 'r');
                 $timeOfLastLogIn = fread($logSuccess, 8192);
                 echo time();
                 if ((time() - $timeOfLastLogIn > 10) && file_exists("../logSuccess.txt")) {unlink("../log.txt");}
