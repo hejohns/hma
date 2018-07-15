@@ -5,7 +5,6 @@
     <?php
       include "config.php";
       $logSuccess = fopen("../logSuccess.txt", 'w');
-      fclose($logSucess);
       $txt = time();
       fwrite($logSuccess, $txt);
       fclose($logSuccess);
