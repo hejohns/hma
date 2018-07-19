@@ -57,7 +57,7 @@ echo '
                 }
                 else{
                         if ($lines < 60) {
-                                $logFailure = fopen("../logFailed.txt", 'w');
+                                $logFailure = fopen("../logFailed.txt", 'w+');
                                 $txt = time();
                                 fwrite($logFailure, $txt);
                                 $lastFailed = fread($logFailure, 8192);
