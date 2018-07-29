@@ -1,8 +1,8 @@
 <html>
 <?php
-echo "<head><style>";
+echo '<head><style>';
 include "../style.css";
-echo "</style></head>";
+echo '</style></head>';
 ?>
 <body>
 <?php
@@ -10,6 +10,7 @@ include "../config.php";
 $user = $_POST['usern'];
 $pass = $_POST['passw'];
 
+        
 if($user == $indexUsername
 && $pass == $indexPassword
 && $_POST['indexInit'] == "1")
