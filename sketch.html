@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.wrapper {
+display: grid;
+grid-template-columns: 1fr;
+grid-template-areas:
+"header"
+"quickAccess"
+"main";
+}
+.block0{
+text-align: center;
+grid-area: header;
+}
+.block{
+text-align: center;
+grid-area: quickAccess;
+}
+.block2{
+text-align: center;
+grid-area: main;
+}
+@media (min-width: 600px){
+.wrapper {
+display: grid;
+grid-template-columns: 1fr 1fr;
+grid-template-areas:
+"header header"
+"quickAccess main";
+}
+.block0{
+text-align: center;
+grid-area: header;
+}
+.block{
+text-align: center;
+grid-area: quickAccess;
+}
+.block2{
+text-align: center;
+grid-area: main;
+}
+
+}
+</style>
+<title>Page Title</title>
+</head>
+<body>
+<div class="wrapper">
+<div class="block0">
+This is a header
+</div>
+<div class="block">
+<button type="button">List All Checked-out</button>
+<button type="button">List All Check-out (Alphabetical)</button>
+<button type="button">List Inventory</button>
+
+<br>
+<br>
+<br>
+<br>
+</div>
+<div class="block2">
+<form action="" method="POST">
+      <select name="placeholder">
+       <option value="1">Search Student</option>
+       <option value="2">Check Out</option>
+       <option value="3">Check In</option>
+      </select>
+      Name <input type="text" name="name" id="name" value="">
+      <select name="form2">
+       <option value="1">Shirt</option>
+       <option value="2">Pants</option>
+       <option value="3">Dress</option>
+      </select>
+      <input type="submit">
+    </form></div>
+</div>
+</body>
+</html>
