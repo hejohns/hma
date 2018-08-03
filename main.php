@@ -4,6 +4,10 @@
   <title>HMA Inventory System</title>
     <?php
       include "config.php";
+      $logSuccess = fopen("../logSuccess.txt", 'w');
+      $txt = time();
+      fwrite($logSuccess, $txt);
+      fclose($logSuccess);
       echo '
       <form action="index.php" method="POST">
         <input type="hidden" name="usern" value="' . "$indexUsername" . '"/>
@@ -33,7 +37,6 @@
         <input type="hidden" name="value" value="3"/>
         <button name ="submit" value="1" type="submit">List entries alphabetically</button>
       </form>
-
       ';
     ?>
   </head>
