@@ -1,12 +1,15 @@
 <?php
 //site settings
-   $domain="";
    $servername = "localhost";
+   $dbName = "hma";
    $dbUsername = "hma";
    $dbPassword = "riverrats";
-   $dbName = "hma";
-   $loanedTableName = "test";
+   $checkedOutMaleTableName = "test";
+   $checkedOutFemaleTableName = "";
+   //http auth info
    $indexUsername = "hma";
    $indexPassword = "riverrats";
-   $loaned = $loanedTableName;
+   //loaned is the main table.
+   $outM = $checkedOutMaleTableName;
+   $outF = $checkedOutFemaleTableName;
 ?>

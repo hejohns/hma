@@ -65,13 +65,11 @@
 		HMA INVENTORY SYSTEM 
 		<br>
 		<br>
-		<br>
 	    </div>
             <div class="quickAccess">
                 <button type="button">List All Checked-out</button>
                 <button type="button">List All Check-out (Alphabetical)</button>
                 <button type="button">List Inventory</button>
-                <br>
                 <br>
                 <br>
             </div>
@@ -89,7 +87,9 @@
                         <option value="3">Dress</option>
                     </select>
                     <input type="submit">
-                </form>
+		</form>
+		<br>
+		<br>
 	    </div>
 	    <div class="footer">This is a footer</div>
         </div>
