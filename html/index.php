@@ -14,7 +14,7 @@ if (empty($_SERVER['PHP_AUTH_DIGEST'])) {
 if (!($data = http_digest_parse($_SERVER['PHP_AUTH_DIGEST'])) ||
     !isset($users[$data['username']])){
     header('HTTP/1.1 401 Unauthorized');
-    header('WWW-Authenticate: Digest realm="' . $realm . '",qop="auth",nonce="' . uniqid() . '",opaque="' . md5($realm) . '"');
+    header('WWW-Authenticate: Digest realm="' . $realm . '",qop="auth",nonce="' . openssl_random_pseudo_bytes(20) . '",opaque="' . md5($realm) . '"');
     die('You shouldn' . 't be seeing this message');
 }
 // generate the valid response
@@ -23,11 +23,13 @@ $A2 = md5($_SERVER['REQUEST_METHOD'].':'.$data['uri']);
 $valid_response = md5($A1.':'.$data['nonce'].':'.$data['nc'].':'.$data['cnonce'].':'.$data['qop'].':'.$A2);
 if ($data['response'] != $valid_response){
     header('HTTP/1.1 401 Unauthorized');
-    header('WWW-Authenticate: Digest realm="' . $realm . '",qop="auth",nonce="' . uniqid() . '",opaque="' . md5($realm) . '"');
+    header('WWW-Authenticate: Digest realm="' . $realm . '",qop="auth",nonce="' . openssl_random_pseudo_bytes(20) . '",opaque="' . md5($realm) . '"');
     die('You shouldn' . 't be seeing this message');
 }
 // ok, valid username & password
 echo 'You are logged in as: ' . $data['username'];
+//sucessful login
+include "../main.php";
 // function to parse the http auth header
 function http_digest_parse($txt)
 {
