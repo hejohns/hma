@@ -1,77 +1,45 @@
-<html>
-<?php
-echo "<head><style>";
-include "../style.css";
-echo "</style></head>";
-?>
-<body>
 <?php
 include "../config.php";
-$user = $_POST['usern'];
-$pass = $_POST['passw'];
-
-
+//straight copy and pasted from the php online manual cause im not entirely sure how this works
 $realm = 'Restricted area';
-
 //user => password
-$users = array('admin' => 'mypass', 'guest' => 'guest');
-?>
-  <head>
-    <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-  </head>
-  <body>
-    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-    <script>
-      function onSignIn(googleUser) {
-        // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        console.log('Full Name: ' + profile.getName());
-        console.log('Given Name: ' + profile.getGivenName());
-        console.log('Family Name: ' + profile.getFamilyName());
-        console.log("Image URL: " + profile.getImageUrl());
-        console.log("Email: " + profile.getEmail());
-
-        // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
-      };
-    </script>
-  </body>
-<?php
-if($user == $indexUsername
-&& $pass == $indexPassword
-&& $_POST['indexInit'] == "1")
-{
-        include("../main.php");
+$users = array($indexUsername=> $indexPassword);
+if (empty($_SERVER['PHP_AUTH_DIGEST'])) {
+    header('HTTP/1.1 401 Unauthorized');
+    header('WWW-Authenticate: Digest realm="'.$realm.
+           '",qop="auth",nonce="'. openssl_random_pseudo_bytes(20).'",opaque="'.md5($realm).'"');
+    die('You hit cancel. Try again.');
 }
-else
-{
-        
-       if($user == $indexUsername
-&& $pass == $indexPassword
-&& $_POST['indexInit'] == "2")
-{
-        include("../form.php");
+// analyze the PHP_AUTH_DIGEST variable
+if (!($data = http_digest_parse($_SERVER['PHP_AUTH_DIGEST'])) ||
+    !isset($users[$data['username']])){
+    header('HTTP/1.1 401 Unauthorized');
+    header('WWW-Authenticate: Digest realm="' . $realm . '",qop="auth",nonce="' . uniqid() . '",opaque="' . md5($realm) . '"');
+    die('You shouldn' . 't be seeing this message');
 }
-        else{
-                if(isset($_POST))
-        {
-
-echo '
-            <form method="POST" action="index.php">
-            <input type="hidden" name="indexInit" value="1" />
-            Username <input type="text" name="usern"></input><br>
-            Password <input type="password" name="passw"></input><br>
-            <input type="submit" name="submit" value="Submit"></input>
-            </form>
-';
-                }
-        }
+// generate the valid response
+$A1 = md5($data['username'] . ':' . $realm . ':' . $users[$data['username']]);
+$A2 = md5($_SERVER['REQUEST_METHOD'].':'.$data['uri']);
+$valid_response = md5($A1.':'.$data['nonce'].':'.$data['nc'].':'.$data['cnonce'].':'.$data['qop'].':'.$A2);
+if ($data['response'] != $valid_response){
+    header('HTTP/1.1 401 Unauthorized');
+    header('WWW-Authenticate: Digest realm="' . $realm . '",qop="auth",nonce="' . uniqid() . '",opaque="' . md5($realm) . '"');
+    die('You shouldn' . 't be seeing this message');
+}
+// ok, valid username & password
+echo 'You are logged in as: ' . $data['username'];
+// function to parse the http auth header
+function http_digest_parse($txt)
+{
+    // protect against missing data
+    $needed_parts = array('nonce'=>1, 'nc'=>1, 'cnonce'=>1, 'qop'=>1, 'username'=>1, 'uri'=>1, 'response'=>1);
+    $data = array();
+    $keys = implode('|', array_keys($needed_parts));
+    preg_match_all('@(' . $keys . ')=(?:([\'"])([^\2]+?)\2|([^\s,]+))@', $txt, $matches, PREG_SET_ORDER);
+    foreach ($matches as $m) {
+        $data[$m[1]] = $m[3] ? $m[3] : $m[4];
+        unset($needed_parts[$m[1]]);
+    }
+    return $needed_parts ? false : $data;
 }
 ?>
-</body>
-</html>
-
