@@ -27,9 +27,11 @@ if ($data['response'] != $valid_response){
     die('You shouldn' . 't be seeing this message');
 }
 // ok, valid username & password
-echo 'You are logged in as: ' . $data['username'];
+//echo 'You are logged in as: ' . $data['username'];
+///////////////////////////////////////////////////////////////////
 //sucessful login
 include "../main.php";
+///////////////////////////////////////////////////////////////////
 // function to parse the http auth header
 function http_digest_parse($txt)
 {
