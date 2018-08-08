@@ -1,5 +1,6 @@
 <?php
 //site settings
+   $domain = "https://hmadb.ddns.net";
    $servername = "localhost";
    $dbName = "hma";
    $dbUsername = "hma";

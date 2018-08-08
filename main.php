@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
+	<style>
+	    body {
+      	        background-color: ivory;
+ 	        text-align: center;
+      	    }
             .wrapper {
                 display: grid;
 		grid-template-areas: 
@@ -66,8 +70,28 @@
 		<br>
 		<br>
 	    </div>
-            <div class="quickAccess">
-                <button type="button">List All Checked-out</button>
+	    <div class="quickAccess">
+		<?php
+/////////////////////////////////////////////////////////////////////
+//super ugly logout function that sends an incorrect request with javascript.
+/////////////////////////////////////////////////////////////////////
+			include "config.php";
+
+		echo
+		'<button onclick="logOut()">Log Out</button>
+		<script>
+			function logOut(){
+				var xhttp = new XMLHttpRequest();
+				xhttp.open("GET", "' .$domain . '", true, "incorrect", "credentials");
+				xhttp.send();';
+		?>
+				document.write('<div>You are logged out. To log back in, press the button below.</div><input type= "button" value= "Log In" onClick= "window.location.href=window.location.href">')
+			}
+		</script>
+<!-- /////////////////////////////////////////////////////////////////-->
+<!-- end of logout function -->
+<!-- /////////////////////////////////////////////////////////////////-->
+		<button type="button">List All Checked-out</button>
                 <button type="button">List All Check-out (Alphabetical)</button>
                 <button type="button">List Inventory</button>
                 <br>

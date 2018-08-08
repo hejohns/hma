@@ -8,7 +8,7 @@ if (empty($_SERVER['PHP_AUTH_DIGEST'])) {
     header('HTTP/1.1 401 Unauthorized');
     header('WWW-Authenticate: Digest realm="'.$realm.
            '",qop="auth",nonce="'. openssl_random_pseudo_bytes(20).'",opaque="'.md5($realm).'"');
-    die('You hit cancel. Try again.');
+    die;
 }
 // analyze the PHP_AUTH_DIGEST variable
 if (!($data = http_digest_parse($_SERVER['PHP_AUTH_DIGEST'])) ||
