@@ -71,17 +71,18 @@
 		<br>
 	    </div>
 	    <div class="quickAccess">
+		<button onclick="logOut()">Log Out</button>
+		<script>
+			function logOut(){
+				var xhttp = new XMLHttpRequest();
+
 		<?php
 /////////////////////////////////////////////////////////////////////
 //super ugly logout function that sends an incorrect request with javascript.
 /////////////////////////////////////////////////////////////////////
 			include "config.php";
-
 		echo
-		'<button onclick="logOut()">Log Out</button>
-		<script>
-			function logOut(){
-				var xhttp = new XMLHttpRequest();
+			'
 				xhttp.open("GET", "' .$domain . '", true, "incorrect", "credentials");
 				xhttp.send();';
 		?>
