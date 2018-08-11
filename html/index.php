@@ -10,6 +10,7 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
 .bigButton {
     display: block;
     width: 100%;
+    height: 100%;
     border: none;
     background-color: #4CAF50;
     color: white;
