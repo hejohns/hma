@@ -7,49 +7,106 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
     header('HTTP/1.1 401 Unauthorized');
     echo '
 <style>
-.bigButtonTop {
-    display: block;
-    margin: 5% 5% 0;
-    width: 90%;
-    height: 45%;
-    border: none;
-    background-color: skyblue;
-    color: black;
-    font-size: 800%;
-    cursor: pointer;
-    text-align: center;
-    padding-top: 40%;
+@media all and (orientation:portrait) {
+
+    .wrapper {
+	width: 100%;
+	height: 100%;
+        display: grid;
+        text-align: center;
+        grid-template-areas: "bigButtonTop"
+       			     "bigButtonBottom";
+    }
+
+    .bigButtonTop {
+        display: block;
+        margin: 5% 5% 0;
+        border: none;
+        background-color: skyblue;
+        color: black;
+        font-size: 800%;
+        cursor: pointer;
+        text-align: center;
+	grid-area: bigButtonTop;
+    }     
+
+    .bigButtonTop:hover {
+        background-color: slategrey;
+        color: black;
+    }
+    .bigButtonBottom {
+        display: block;
+        margin: 0 5% 5%;
+        border: none;
+        background-color: steelblue;
+        color: black;
+        font-size: 800%;
+        cursor: pointer;
+        text-align: center;
+	grid-area: bigButtonBottom;
+    }
+
+     .bigButtonBottom:hover {
+        background-color: sienna;
+        color: black;
+    }
+     input {
+        -webkit-appearance: none;
+    }
+}
+@media all and (orientation:landscape) {
+    .wrapper {
+	width: 100%;
+	height: 100%;
+        display: grid;
+	text-align: center;
+	grid-template-columns: 1fr 1fr;
+        grid-template-areas: "bigButtonTop bigButtonBottom";
+    }
+
+    .bigButtonTop {
+        display: block;
+        margin: 5% 0 5% 5%;
+        border: none;
+        background-color: skyblue;
+        color: black;
+        font-size: 800%;
+        cursor: pointer;
+        text-align: center;
+	grid-area: bigButtonTop;
+    }     
+
+    .bigButtonTop:hover {
+        background-color: slategrey;
+        color: black;
+    }
+    .bigButtonBottom {
+        display: block;
+        margin: 5% 5% 5% 0;
+        border: none;
+        background-color: steelblue;
+        color: black;
+        font-size: 800%;
+        cursor: pointer;
+        text-align: center;
+	grid-area: bigButtonBottom;
+    }
+
+     .bigButtonBottom:hover {
+        background-color: sienna;
+        color: black;
+    }
+     input {
+        -webkit-appearance: none;
+    }
 }
 
-.bigButtonTop:hover {
-    background-color: slategrey;
-    color: black;
-}
-.bigButtonBottom {
-    display: block;
-    margin: 0 5% 5%;
-    width: 90%;
-    height: 45%;
-    border: none;
-    background-color: steelblue;
-    color: black;
-    font-size: 800%;
-    cursor: pointer;
-    text-align: center;
-    padding-bottom: 70%;
-}
-
-.bigButtonBottom:hover {
-    background-color: sienna;
-    color: black;
-}
-input {
-    -webkit-appearance: none;
-}
 </style>
 <body>
-	<input type="button" class="bigButtonTop" value="Click to" onClick="window.location.href=window.location.href">
-	<input type="button" class="bigButtonBottom" value="Log in" onClick="window.location.href=window.location.href">
+	<div class="wrapper">
+		<input type="button" class="bigButtonTop" value="Click to" onClick="window.location.href=window.location.href">
+		<input type="button" class="bigButtonBottom" value="Log in" onClick="window.location.href=window.location.href">
+	</div>
 </body>
 ';
     die();
@@ -63,51 +120,109 @@ else {
 //request with incorrect credentials	    
 	header('WWW-Authenticate: Basic realm="REALM"');
 	header('HTTP/1.1 401 Unauthorized');
+//(same as above log in page)
 	echo '
 <style>
-.bigButtonTop {
-    display: block;
-    margin: 5% 5% 0;
-    width: 90%;
-    height: 45%;
-    border: none;
-    background-color: skyblue;
-    color: black;
-    font-size: 800%;
-    cursor: pointer;
-    text-align: center;
-    padding-top: 40%;
+@media all and (orientation:portrait) {
+
+    .wrapper {
+	width: 100%;
+	height: 100%;
+        display: grid;
+        text-align: center;
+        grid-template-areas: "bigButtonTop"
+       			     "bigButtonBottom";
+    }
+
+    .bigButtonTop {
+        display: block;
+        margin: 5% 5% 0;
+        border: none;
+        background-color: skyblue;
+        color: black;
+        font-size: 800%;
+        cursor: pointer;
+        text-align: center;
+	grid-area: bigButtonTop;
+    }     
+
+    .bigButtonTop:hover {
+        background-color: slategrey;
+        color: black;
+    }
+    .bigButtonBottom {
+        display: block;
+        margin: 0 5% 5%;
+        border: none;
+        background-color: steelblue;
+        color: black;
+        font-size: 800%;
+        cursor: pointer;
+        text-align: center;
+	grid-area: bigButtonBottom;
+    }
+
+     .bigButtonBottom:hover {
+        background-color: sienna;
+        color: black;
+    }
+     input {
+        -webkit-appearance: none;
+    }
+}
+@media all and (orientation:landscape) {
+    .wrapper {
+	width: 100%;
+	height: 100%;
+        display: grid;
+	text-align: center;
+	grid-template-columns: 1fr 1fr;
+        grid-template-areas: "bigButtonTop bigButtonBottom";
+    }
+
+    .bigButtonTop {
+        display: block;
+        margin: 5% 0 5% 5%;
+        border: none;
+        background-color: skyblue;
+        color: black;
+        font-size: 800%;
+        cursor: pointer;
+        text-align: center;
+	grid-area: bigButtonTop;
+    }     
+
+    .bigButtonTop:hover {
+        background-color: slategrey;
+        color: black;
+    }
+    .bigButtonBottom {
+        display: block;
+        margin: 5% 5% 5% 0;
+        border: none;
+        background-color: steelblue;
+        color: black;
+        font-size: 800%;
+        cursor: pointer;
+        text-align: center;
+	grid-area: bigButtonBottom;
+    }
+
+     .bigButtonBottom:hover {
+        background-color: sienna;
+        color: black;
+    }
+     input {
+        -webkit-appearance: none;
+    }
 }
 
-.bigButtonTop:hover {
-    background-color: slategrey;
-    color: black;
-}
-.bigButtonBottom {
-    display: block;
-    margin: 0 5% 5%;
-    width: 90%;
-    height: 45%;
-    border: none;
-    background-color: steelblue;
-    color: black;
-    font-size: 800%;
-    cursor: pointer;
-    text-align: center;
-    padding-bottom: 70%;
-}
-
-.bigButtonBottom:hover {
-    background-color: sienna;
-    color: black;
-}
-input {
-    -webkit-appearance: none;
-}
 </style>
 <body>
-	<input type="button" class="bigButtonTop" value="Click to" onClick="window.location.href=window.location.href">
-	<input type="button" class="bigButtonBottom" value="Log in" onClick="window.location.href=window.location.href">
+	<div class="wrapper">
+		<input type="button" class="bigButtonTop" value="Click to" onClick="window.location.href=window.location.href">
+		<input type="button" class="bigButtonBottom" value="Log in" onClick="window.location.href=window.location.href">
+	</div>
 </body>
 ';
 	die();
