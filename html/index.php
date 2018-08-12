@@ -7,27 +7,49 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
     header('HTTP/1.1 401 Unauthorized');
     echo '
 <style>
-.bigButton {
+.bigButtonTop {
     display: block;
-    width: 100%;
-    height: 100%;
+    margin: 5% 5% 0;
+    width: 90%;
+    height: 45%;
     border: none;
-    background-color: #4CAF50;
-    color: white;
-    padding-top: 30%;
-    padding-bottom: 30%;
-    font-size: 16px;
+    background-color: skyblue;
+    color: black;
+    font-size: 800%;
     cursor: pointer;
     text-align: center;
+    padding-top: 40%;
 }
 
-.bigButton:hover {
-    background-color: #ddd;
+.bigButtonTop:hover {
+    background-color: slategrey;
     color: black;
+}
+.bigButtonBottom {
+    display: block;
+    margin: 0 5% 5%;
+    width: 90%;
+    height: 45%;
+    border: none;
+    background-color: steelblue;
+    color: black;
+    font-size: 800%;
+    cursor: pointer;
+    text-align: center;
+    padding-bottom: 70%;
+}
+
+.bigButtonBottom:hover {
+    background-color: sienna;
+    color: black;
+}
+input {
+    -webkit-appearance: none;
 }
 </style>
 <body>
-	<input type="button" class="bigButton" value="Log In" onClick="window.location.href=window.location.href">
+	<input type="button" class="bigButtonTop" value="Click to" onClick="window.location.href=window.location.href">
+	<input type="button" class="bigButtonBottom" value="Log in" onClick="window.location.href=window.location.href">
 </body>
 ';
     die();
@@ -42,8 +64,51 @@ else {
 	header('WWW-Authenticate: Basic realm="REALM"');
 	header('HTTP/1.1 401 Unauthorized');
 	echo '
+<style>
+.bigButtonTop {
+    display: block;
+    margin: 5% 5% 0;
+    width: 90%;
+    height: 45%;
+    border: none;
+    background-color: skyblue;
+    color: black;
+    font-size: 800%;
+    cursor: pointer;
+    text-align: center;
+    padding-top: 40%;
+}
 
+.bigButtonTop:hover {
+    background-color: slategrey;
+    color: black;
+}
+.bigButtonBottom {
+    display: block;
+    margin: 0 5% 5%;
+    width: 90%;
+    height: 45%;
+    border: none;
+    background-color: steelblue;
+    color: black;
+    font-size: 800%;
+    cursor: pointer;
+    text-align: center;
+    padding-bottom: 70%;
+}
 
+.bigButtonBottom:hover {
+    background-color: sienna;
+    color: black;
+}
+input {
+    -webkit-appearance: none;
+}
+</style>
+<body>
+	<input type="button" class="bigButtonTop" value="Click to" onClick="window.location.href=window.location.href">
+	<input type="button" class="bigButtonBottom" value="Log in" onClick="window.location.href=window.location.href">
+</body>
 ';
 	die();
     }
