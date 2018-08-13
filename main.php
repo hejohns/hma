@@ -5,9 +5,16 @@
 	    body {
       	        background-color: ivory;
  	        text-align: center;
-      	    }
-            .wrapper {
-                display: grid;
+	    }
+	    button {
+		font-size: 4vw;
+	    }
+	    .wrapper {
+		width: 100vw;
+		height: 100vh;
+		margin: auto;
+		display: grid;
+		grid-template-rows: 1fr 3fr 3fr 1fr;
 		grid-template-areas: 
 			"header" 
 			"quickAccess" 
@@ -17,46 +24,61 @@
 
             .header {
                 text-align: center;
+		margin: auto;
                 grid-area: header;
             }
 
             .quickAccess {
                 text-align: center;
+		    margin: auto;
                 grid-area: quickAccess;
             }
 
             .main {
                 text-align: center;
+		margin: auto;
                 grid-area: main;
             }
 	    .footer {
 	        text-align: center;
+		margin: auto;
 	        grid-area: footer;
 	    }
 
-            @media (min-width: 600px) {
-                .wrapper {
+            @media (min-width: 981px) {
+		button {
+		    font-size: 3vw;
+		}
+		.wrapper {
+		    width: 100vw;
+		    height: 100vh;
+		    margin: auto;
                     display: grid;
-                    grid-template-columns: 1fr 1fr;
+		    grid-template-columns: 1fr 1fr;
+		    grid-template-rows: 1fr 3fr 1fr;
                     grid-template-areas: "header header" "quickAccess main" "footer footer";
                 }
 
                 .header {
-                    text-align: center;
+		    text-align: center;
+		    margin: auto;
                     grid-area: header;
                 }
 
                 .quickAccess {
                     text-align: center;
+		    margin: auto;
                     grid-area: quickAccess;
                 }
 
                 .main {
                     text-align: center;
+		    margin: auto;
                     grid-area: main;
 		}
 		.footer {
 		    text-align: center;
+		    margin: auto;
 		    grid-area: footer;
 		}
             }
@@ -67,8 +89,6 @@
         <div class="wrapper">
 	    <div class="header">
 		HMA INVENTORY SYSTEM 
-		<br>
-		<br>
 	    </div>
 	    <div class="quickAccess">
 		<button onclick="logOut()">Log Out</button>
@@ -86,7 +106,7 @@
 				xhttp.open("GET", "' .$domain . '", true, "incorrect", "credentials");
 				xhttp.send();';
 		?>
-				document.write('<div>You are logged out. To log back in, press the button below.</div><input type= "button" value= "Log In" onClick= "window.location.href=window.location.href">')
+				document.write('<style>input{width:100vw;height:50vh;margin:auto;font-size:50px;-webkit-appearance:none;}body{font-size:50px;}</style><body>You are logged out. To log back in, press the button below.</body><input type= "button" value= "Log In" onClick= "window.location.href=window.location.href">')
 			}
 		</script>
 <!-- /////////////////////////////////////////////////////////////////-->
@@ -95,8 +115,6 @@
 		<button type="button">List All Checked-out</button>
                 <button type="button">List All Check-out (Alphabetical)</button>
                 <button type="button">List Inventory</button>
-                <br>
-                <br>
             </div>
             <div class="main">
                 <form action="" method="POST">
@@ -113,8 +131,6 @@
                     </select>
                     <input type="submit">
 		</form>
-		<br>
-		<br>
 	    </div>
 	    <div class="footer">This is a footer</div>
         </div>

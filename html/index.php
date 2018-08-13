@@ -10,8 +10,9 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
 @media all and (orientation:portrait) {
 
     .wrapper {
-	width: 100%;
-	height: 100%;
+	width: 80%;
+	height: 80%;
+	margin: 10% 10% 10% 10%;
         display: grid;
         text-align: center;
         grid-template-areas: "bigButtonTop"
@@ -56,8 +57,9 @@ if (!isset($_SERVER['PHP_AUTH_USER'])) {
 }
 @media all and (orientation:landscape) {
     .wrapper {
-	width: 100%;
-	height: 100%;
+	width: 80%;
+	height: 80%;
+	margin: 10% 10% 10% 10%;
         display: grid;
 	text-align: center;
 	grid-template-columns: 1fr 1fr;
@@ -126,8 +128,9 @@ else {
 @media all and (orientation:portrait) {
 
     .wrapper {
-	width: 100%;
-	height: 100%;
+	width: 80%;
+	height: 80%;
+	margin: 10% 10% 10% 10%;
         display: grid;
         text-align: center;
         grid-template-areas: "bigButtonTop"
@@ -172,8 +175,9 @@ else {
 }
 @media all and (orientation:landscape) {
     .wrapper {
-	width: 100%;
-	height: 100%;
+	width: 80%;
+	height: 80%;
+	margin: 10% 10% 10% 10%;
         display: grid;
 	text-align: center;
 	grid-template-columns: 1fr 1fr;
