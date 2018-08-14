@@ -13,4 +13,5 @@
    //loaned is the main table.
    $outM = $checkedOutMaleTableName;
    $outF = $checkedOutFemaleTableName;
+   $loaned = "test";
 ?>

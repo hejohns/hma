@@ -112,7 +112,9 @@
 <!-- /////////////////////////////////////////////////////////////////-->
 <!-- end of logout function -->
 <!-- /////////////////////////////////////////////////////////////////-->
-		<button type="button">List All Checked-out</button>
+		<form method="POST">
+			<button name="listOut" value="TRUE" type="submit">List All Checked Out</button>
+		</form>
                 <button type="button">List All Check-out (Alphabetical)</button>
                 <button type="button">List Inventory</button>
             </div>
@@ -132,7 +134,44 @@
                     <input type="submit">
 		</form>
 	    </div>
-	    <div class="footer">This is a footer</div>
+	    <div class="footer">
+		<?php
+// Create connection
+      		$conn = new mysqli($servername, $dbUsername, $dbPassword, $dbName);
+// Check connection
+  	        if ($conn->connect_error) {
+     		      die("Connection failed: " . $conn->connect_error);
+       		}
+		if ($_POST["listOut"] == TRUE) {
+              	$sql = "SELECT * FROM $loaned ORDER BY name";
+              	$result = $conn->query($sql);
+              	echo '<table>';
+                      $sql2 = "SHOW COLUMNS FROM $loaned";
+		      $result2 = $conn->query($sql2);
+		      echo '<tr>';
+                      while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row2["Field"];
+			      echo '</td>';
+                      }
+                      echo '</tr>';
+              	      while ($row = $result->fetch_assoc()){
+                      $sql2 = "SHOW COLUMNS FROM $loaned";
+                      $result2 = $conn->query($sql2);
+                      echo '<tr>';
+                      while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row[$row2["Field"]];
+                              echo '</td>';
+                      }
+                      echo '</tr>';
+              	      }
+              	echo '</table>';
+		}
+//close connection
+      		$conn->close();
+		?>
+	    </div>
         </div>
     </body>
 </html>
