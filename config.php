@@ -5,8 +5,8 @@
    $dbName = "hma";
    $dbUsername = "hma";
    $dbPassword = "riverrats";
-   $checkedOutMaleTableName = "test";
-   $checkedOutFemaleTableName = "";
+   $checkedOutMaleTableName = "outM";
+   $checkedOutFemaleTableName = "outF";
    //http auth info
    $indexUsername = "hma";
    $indexPassword = "riverrats";
