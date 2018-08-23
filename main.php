@@ -141,6 +141,28 @@
 		<form method="POST">
 			<button name="listInPants" value="TRUE" type="submit">List Checked In (PANTS)</button>
 		</form>
+		<br>
+		<form method="POST">
+			<button name="listInShirts" value="TRUE" type="submit">List Checked In (SHIRTS)</button>
+		</form>
+		<br>
+		<form method="POST">
+			<button name="listInVests" value="TRUE" type="submit">List Checked In (VESTS)</button>
+		</form>
+		<br>
+		<form method="POST">
+			<button name="listInJackets" value="TRUE" type="submit">List Checked In (JACKETS)</button>
+		</form>
+		<br>
+		<form method="POST">
+			<button name="listInDresses" value="TRUE" type="submit">List Checked In (DRESSES)</button>
+		</form>
+		<br>
+		<form method="POST">
+			<button name="listUnpaid" value="TRUE" type="submit">List Unpaid</button>
+		</form>
+		<br>
+
 	    </div>
             <div class="main">
                 <form action="" method="POST">
@@ -261,7 +283,7 @@
 
 //list inventory PANTS
 		if ($_POST["listInPants"] == TRUE) {
-			$sql = "SELECT * FROM hma.pants WHERE `in`='t'";
+			$sql = "SELECT * FROM hma.pants WHERE `in`='t' ORDER BY `index`";
 			$result = $conn->query($sql);
 			echo '<table>';
                         $sql2 = "SHOW COLUMNS FROM hma.pants";
@@ -280,6 +302,165 @@
                         while ($row2 = $result2->fetch_assoc()){
                               echo '<td>';
                               echo $row[$row2["Field"]];
+                              echo '</td>';
+                        }
+                        echo '</tr>';
+              	        }
+  	                echo '</table>';
+		}
+//list inventory SHIRTS
+		if ($_POST["listInShirts"] == TRUE) {
+			$sql = "SELECT * FROM hma.shirts WHERE `in`='t' ORDER BY `index`";
+			$result = $conn->query($sql);
+			echo '<table>';
+                        $sql2 = "SHOW COLUMNS FROM hma.shirts";
+		        $result2 = $conn->query($sql2);
+		        echo '<tr>';
+                        while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row2["Field"];
+			      echo '</td>';
+                        }
+                        echo '</tr>';
+              	        while ($row = $result->fetch_assoc()){
+                        $sql2 = "SHOW COLUMNS FROM hma.shirts";
+                        $result2 = $conn->query($sql2);
+                        echo '<tr>';
+                        while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row[$row2["Field"]];
+                              echo '</td>';
+                        }
+                        echo '</tr>';
+              	        }
+  	                echo '</table>';
+		}
+//list inventory VESTS
+		if ($_POST["listInVests"] == TRUE) {
+			$sql = "SELECT * FROM hma.vests WHERE `in`='t' ORDER BY `index`";
+			$result = $conn->query($sql);
+			echo '<table>';
+                        $sql2 = "SHOW COLUMNS FROM hma.vests";
+		        $result2 = $conn->query($sql2);
+		        echo '<tr>';
+                        while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row2["Field"];
+			      echo '</td>';
+                        }
+                        echo '</tr>';
+              	        while ($row = $result->fetch_assoc()){
+                        $sql2 = "SHOW COLUMNS FROM hma.vests";
+                        $result2 = $conn->query($sql2);
+                        echo '<tr>';
+                        while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row[$row2["Field"]];
+                              echo '</td>';
+                        }
+                        echo '</tr>';
+              	        }
+  	                echo '</table>';
+		}
+//list inventory JACKETS
+		if ($_POST["listInJackets"] == TRUE) {
+			$sql = "SELECT * FROM hma.jackets WHERE `in`='t' ORDER BY `index`";
+			$result = $conn->query($sql);
+			echo '<table>';
+                        $sql2 = "SHOW COLUMNS FROM hma.jackets";
+		        $result2 = $conn->query($sql2);
+		        echo '<tr>';
+                        while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row2["Field"];
+			      echo '</td>';
+                        }
+                        echo '</tr>';
+              	        while ($row = $result->fetch_assoc()){
+                        $sql2 = "SHOW COLUMNS FROM hma.jackets";
+                        $result2 = $conn->query($sql2);
+                        echo '<tr>';
+                        while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row[$row2["Field"]];
+                              echo '</td>';
+                        }
+                        echo '</tr>';
+              	        }
+  	                echo '</table>';
+		}
+//list inventory DRESSES
+		if ($_POST["listInDresses"] == TRUE) {
+			$sql = "SELECT * FROM hma.dresses WHERE `in`='t' ORDER BY `index`";
+			$result = $conn->query($sql);
+			echo '<table>';
+                        $sql2 = "SHOW COLUMNS FROM hma.dresses";
+		        $result2 = $conn->query($sql2);
+		        echo '<tr>';
+                        while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row2["Field"];
+			      echo '</td>';
+                        }
+                        echo '</tr>';
+              	        while ($row = $result->fetch_assoc()){
+                        $sql2 = "SHOW COLUMNS FROM hma.dresses";
+                        $result2 = $conn->query($sql2);
+                        echo '<tr>';
+                        while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row[$row2["Field"]];
+                              echo '</td>';
+                        }
+                        echo '</tr>';
+              	        }
+  	                echo '</table>';
+		}
+//list unpaid
+		if ($_POST["listUnpaid"] == TRUE){
+			$sql9 = "SELECT * FROM $outM WHERE `paid`='f' ORDER BY `name`";
+			$sql8 = "SELECT * FROM $outF WHERE `paid`='f' ORDER BY `name`";
+			$result9 = $conn->query($sql9);
+			$result8 = $conn->query($sql8);
+			echo '<table>';
+                        $sql2 = "SHOW COLUMNS FROM $outM";
+		        $result2 = $conn->query($sql2);
+		        echo '<tr>';
+                        while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row2["Field"];
+			      echo '</td>';
+                        }
+                        echo '</tr>';
+              	        while ($row = $result9->fetch_assoc()){
+                        $sql2 = "SHOW COLUMNS FROM $outM";
+                        $result2 = $conn->query($sql2);
+                        echo '<tr>';
+                        while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row9[$row2["Field"]];
+                              echo '</td>';
+                        }
+                        echo '</tr>';
+              	        }
+  	                echo '</table>';
+			echo '<table>';
+                        $sql2 = "SHOW COLUMNS FROM $outF";
+		        $result2 = $conn->query($sql2);
+		        echo '<tr>';
+                        while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row2["Field"];
+			      echo '</td>';
+                        }
+                        echo '</tr>';
+              	        while ($row = $result->fetch_assoc()){
+                        $sql2 = "SHOW COLUMNS FROM $outF";
+                        $result2 = $conn->query($sql2);
+                        echo '<tr>';
+                        while ($row2 = $result2->fetch_assoc()){
+                              echo '<td>';
+                              echo $row8[$row2["Field"]];
                               echo '</td>';
                         }
                         echo '</tr>';
