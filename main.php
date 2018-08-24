@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>hmaDB</title>
 	<style>
 	    body {
       	        background-color: ivory;
@@ -34,13 +35,28 @@
 		    margin: auto;
                 grid-area: quickAccess;
             }
-
             .main {
                 text-align: center;
 		margin: auto;
-                grid-area: main;
-            }
-	    .footer {
+		grid-area: main;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr 1fr;
+		grid-template-areas: "mainTop"
+				     "mainBottom";
+	    }
+		.mainTop {
+		    text-align: center;
+		    margin: auto;
+		    grid-area: mainTop;
+		}
+		.mainBottom {
+		    text-align: center;
+		    margin: auto;
+		    grid-area: mainBottom;
+		}
+
+            .footer {
 	        text-align: center;
 		margin: 0 auto auto;
 	        grid-area: footer;
@@ -73,7 +89,9 @@
                     display: grid;
 		    grid-template-columns: 1fr 1fr;
 		    grid-template-rows: 1fr 9fr 10fr;
-                    grid-template-areas: "header header" "quickAccess main" "footer footer";
+		    grid-template-areas: "header header" 
+					 "quickAccess main" 
+					 "footer footer";
                 }
 
                 .header {
@@ -91,7 +109,22 @@
                 .main {
                     text-align: center;
 		    margin: auto;
-                    grid-area: main;
+		    grid-area: main;
+		    display: grid;
+		    grid-template-columns: 1fr;
+		    grid-template-rows: 1fr 1fr;
+		    grid-template-areas: "mainTop"
+					"mainBottom";
+		}
+		.mainTop {
+		    text-align: center;
+		    margin: auto;
+		    grid-area: mainTop;
+		}
+		.mainBottom {
+		    text-align: center;
+		    margin: auto;
+		    grid-area: mainBottom;
 		}
 		.footer {
 		    text-align: center;
@@ -99,13 +132,13 @@
 		}
             }
         </style>
-        <title>main.php</title>
     </head>
     <body>
         <div class="wrapper">
 	    <div class="header">
-		<p>HMA INVENTORY SYSTEM</p>
-		<p>Remeber to use t/f, not y/n</p>
+		<b>HMA INVENTORY SYSTEM</b>
+		<p>For assistance, contact Johnson He at [johnson.he2009@gmail.com] or [734-274-3757]</p>
+		<p>Remember to use t/f, not y/n</p>
 	    </div>
 	    <div class="quickAccess">
 		<button onclick="logOut()">Log Out</button>
@@ -124,7 +157,7 @@
 				xhttp.open("GET", "' .$domain . '", true, "incorrect", "credentials");
 				xhttp.send();';
 		?>
-				document.write('<style>input{width:100vw;height:50vh;margin:auto;font-size:50px;-webkit-appearance:none;}body{font-size:50px;}</style><body>You are logged out. To log back in, press the button below.</body><input type= "button" value= "Log In" onClick= "window.location.href=window.location.href">')
+			document.write('<style>input{width:90vw;height:60vh;margin:auto;font-size:50px;-webkit-appearance:none;}body{font-size:50px;}</style><body>You are logged out. To log back in, press the button below.</body><input type= "button" value= "Log In" onClick= "window.location.href=window.location.href">')
 			}
 		</script>
 <!-- /////////////////////////////////////////////////////////////////-->
@@ -164,21 +197,39 @@
 		<br>
 
 	    </div>
-            <div class="main">
-                <form action="" method="POST">
-                    <select name="formInit">
-                        <option value="1">Search Student</option>
-                        <option value="2">Check Out</option>
-                        <option value="3">Check In</option>
-                    </select>
-                    Name <input type="text" name="name" id="name" value="">
-                    <select name="form2">
-                        <option value="1">Shirt</option>
-                        <option value="2">Pants</option>
-                        <option value="3">Dress</option>
-                    </select>
-                    <input type="submit">
-		</form>
+	    <div class="main">
+		<div class="mainTop"> 
+          	    <form action="" method="POST">
+               	     	<select name="formInit">
+               	      	    <option value="searchStudent">Search Student</option>
+               	     	    <option value="checkOut">Check Out</option>
+               	     	    <option value="checkIn">Check In</option>
+			</select>
+			<br>
+			<br>
+               	        First Name <input type="text" name="firstName" id="firstName" value="">
+			Last Name <input type="text" name="lastName" id="lastName" value="">
+			<br>
+			<br>
+               	        <select name="clothingItem">
+               	            <option value="pants">Pants</option>
+               	            <option value="shirt">Shirt</option>
+               	            <option value="vest">Vest</option>
+               	            <option value="jacket">Jacket</option>
+               	            <option value="dress">Dress</option>
+			</select>
+			Index <input type="text" name="index" id="index" value="">
+        	            <input type="submit">
+		    </form>
+		</div>
+		<div class="mainBottom">
+		    <p>Made by:</p>
+		    <p>Umang Bhojani [umang.bhojani@yahoo.com]<p/>
+		    <p>Johnson He [johnson.he2009@gmail.com]</p>
+		    <p>Nihar Joshi [nihardjoshi@gmail.com]</p>
+		    <p>Nathan Lee [nathan0320lee@gmail.com]</p>
+		    <p>Peter Stenger [peter.a.stenger@gmail.com]</p>
+		</div>
 	    </div>
 	    <div class="footer">
 		<?php
@@ -228,7 +279,7 @@
 		}
 //list outM alphabetical
 		if ($_POST["listOutM"] == TRUE) {
-              	$sql = "SELECT * FROM $outM ORDER BY name";
+              	$sql = "SELECT * FROM $outM ORDER BY lastName";
               	$result = $conn->query($sql);
               	echo '<table>';
                       $sql2 = "SHOW COLUMNS FROM $outM";
@@ -255,7 +306,7 @@
 		}
 //list outF alphabetical
 		if ($_POST["listOutF"] == TRUE) {
-              	$sql = "SELECT * FROM $outF ORDER BY name";
+              	$sql = "SELECT * FROM $outF ORDER BY lastName";
               	$result = $conn->query($sql);
               	echo '<table>';
                       $sql2 = "SHOW COLUMNS FROM $outF";
@@ -418,8 +469,8 @@
 		}
 //list unpaid
 		if ($_POST["listUnpaid"] == TRUE){
-			$sql9 = "SELECT * FROM $outM WHERE `paid`='f' ORDER BY `name`";
-			$sql8 = "SELECT * FROM $outF WHERE `paid`='f' ORDER BY `name`";
+			$sql9 = "SELECT * FROM $outM WHERE `paid`='f' ORDER BY `lastName`";
+			$sql8 = "SELECT * FROM $outF WHERE `paid`='f' ORDER BY `lastName`";
 			$result9 = $conn->query($sql9);
 			$result8 = $conn->query($sql8);
 			echo '<table>';
@@ -432,7 +483,7 @@
 			      echo '</td>';
                         }
                         echo '</tr>';
-              	        while ($row = $result9->fetch_assoc()){
+              	        while ($row9 = $result9->fetch_assoc()){
                         $sql2 = "SHOW COLUMNS FROM $outM";
                         $result2 = $conn->query($sql2);
                         echo '<tr>';
@@ -454,7 +505,7 @@
 			      echo '</td>';
                         }
                         echo '</tr>';
-              	        while ($row = $result->fetch_assoc()){
+              	        while ($row8 = $result8->fetch_assoc()){
                         $sql2 = "SHOW COLUMNS FROM $outF";
                         $result2 = $conn->query($sql2);
                         echo '<tr>';
@@ -466,6 +517,70 @@
                         echo '</tr>';
               	        }
   	                echo '</table>';
+		}
+//data manipulation AKA mainTop
+		if ($_POST["formInit"] == "searchStudent") {
+			$firstName = $_POST["firstName"];
+			$lastName = $_POST["lastName"];
+			echo $firstName, $lastName;
+			if (!empty($firstName) && !empty($lastName)) {
+				$sql = "SELECT * FROM $dbName.$outM WHERE `firstName` LIKE \'$firstName\' AND `lastName` LIKE \'$lastName\' ORDER BY `lastName`";
+				$result = $conn->query($sql);
+				$sql2 = "SELECT * FROM $dbName.$outF WHERE `firstName` LIKE \'$firstName\' AND `lastName` LIKE \'$lastName\' ORDER BY `lastName`";
+				$result2 = $conn->query($sql2);
+				echo '<table>';
+					$sql3 = "SHOW COLUMNS FROM $outM";
+					$result3 = $conn->query($sql3);
+					echo '<tr>';
+					while ($row3 = $result3->fetch_assoc()) {
+						echo '<td>';
+						echo $row3["Field"];
+						echo '</td>';
+					}
+					echo '</tr>';
+					while ($row = $result->fetch_assoc()) {
+						$sql3 = "SHOW COLUMNS FROM $outM";
+						$result3 = $conn->query($sql3);
+						echo '<tr>';
+						while ($row3 = $result3->fetch_assoc()) {
+							echo '<td>';
+							echo $row[$row3["Field"]];
+							echo '</td>';
+						}
+						echo '</tr>';
+					}
+				echo '</table>';
+				echo '<table>';
+					$sql3 = "SHOW COLUMNS FROM $outF";
+					$result3 = $conn->query($sql3);
+					echo '<tr>';
+					while ($row3 = $result3->fetch_assoc()) {
+						echo '<td>';
+						echo $row3["Field"];
+						echo '</td>';
+					}
+					echo '</tr>';
+					while ($row2 = $result2->fetch_assoc()) {
+						$sql3 = "SHOW COLUMNS FROM $outF";
+						$result3 = $conn->query($sql3);
+						echo '<tr>';
+						while ($row3 = $result3->fetch_assoc()) {
+							echo '<td>';
+							echo $row2[$row3["Field"]];
+							echo '</td>';
+						}
+						echo '</tr>';
+					}
+				echo '</table>';	
+			}
+			else {
+				if (!empty($firstName) && empty($lastName)) {
+				}
+				if (empty($firstName) && !empty($lastName)) {
+				}
+				else {
+				}
+			}
 		}
 //close connection
       		$conn->close();
