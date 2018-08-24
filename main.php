@@ -528,8 +528,6 @@
 				$result = $conn->query($sql);
 				$sql2 = "SELECT * FROM $dbName.$outF WHERE `firstName` LIKE '$firstName%' AND `lastName` LIKE '$lastName%' ORDER BY `lastName`";
 				$result2 = $conn->query($sql2);
-				echo print_r($result);
-				echo print_r($result2);
 				echo '<table>';
 					$sql3 = "SHOW COLUMNS FROM $outM";
 					$result3 = $conn->query($sql3);
