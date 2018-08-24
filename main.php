@@ -519,15 +519,17 @@
   	                echo '</table>';
 		}
 //data manipulation AKA mainTop
+	//search 
 		if ($_POST["formInit"] == "searchStudent") {
 			$firstName = $_POST["firstName"];
 			$lastName = $_POST["lastName"];
-			echo $firstName, $lastName;
 			if (!empty($firstName) && !empty($lastName)) {
-				$sql = "SELECT * FROM $dbName.$outM WHERE `firstName` LIKE \'$firstName\' AND `lastName` LIKE \'$lastName\' ORDER BY `lastName`";
+				$sql = "SELECT * FROM $dbName.$outM WHERE `firstName` LIKE '$firstName%' AND `lastName` LIKE '$lastName%' ORDER BY `lastName`";
 				$result = $conn->query($sql);
-				$sql2 = "SELECT * FROM $dbName.$outF WHERE `firstName` LIKE \'$firstName\' AND `lastName` LIKE \'$lastName\' ORDER BY `lastName`";
+				$sql2 = "SELECT * FROM $dbName.$outF WHERE `firstName` LIKE '$firstName%' AND `lastName` LIKE '$lastName%' ORDER BY `lastName`";
 				$result2 = $conn->query($sql2);
+				echo print_r($result);
+				echo print_r($result2);
 				echo '<table>';
 					$sql3 = "SHOW COLUMNS FROM $outM";
 					$result3 = $conn->query($sql3);
@@ -575,13 +577,116 @@
 			}
 			else {
 				if (!empty($firstName) && empty($lastName)) {
+				$sql = "SELECT * FROM $dbName.$outM WHERE `firstName` LIKE '$firstName%' ORDER BY `lastName`";
+				$result = $conn->query($sql);
+				$sql2 = "SELECT * FROM $dbName.$outF WHERE `firstName` LIKE '$firstName%' ORDER BY `lastName`";
+				$result2 = $conn->query($sql2);
+				echo print_r($result);
+				echo print_r($result2);
+				echo '<table>';
+					$sql3 = "SHOW COLUMNS FROM $outM";
+					$result3 = $conn->query($sql3);
+					echo '<tr>';
+					while ($row3 = $result3->fetch_assoc()) {
+						echo '<td>';
+						echo $row3["Field"];
+						echo '</td>';
+					}
+					echo '</tr>';
+					while ($row = $result->fetch_assoc()) {
+						$sql3 = "SHOW COLUMNS FROM $outM";
+						$result3 = $conn->query($sql3);
+						echo '<tr>';
+						while ($row3 = $result3->fetch_assoc()) {
+							echo '<td>';
+							echo $row[$row3["Field"]];
+							echo '</td>';
+						}
+						echo '</tr>';
+					}
+				echo '</table>';
+				echo '<table>';
+					$sql3 = "SHOW COLUMNS FROM $outF";
+					$result3 = $conn->query($sql3);
+					echo '<tr>';
+					while ($row3 = $result3->fetch_assoc()) {
+						echo '<td>';
+						echo $row3["Field"];
+						echo '</td>';
+					}
+					echo '</tr>';
+					while ($row2 = $result2->fetch_assoc()) {
+						$sql3 = "SHOW COLUMNS FROM $outF";
+						$result3 = $conn->query($sql3);
+						echo '<tr>';
+						while ($row3 = $result3->fetch_assoc()) {
+							echo '<td>';
+							echo $row2[$row3["Field"]];
+							echo '</td>';
+						}
+						echo '</tr>';
+					}
+				echo '</table>';
 				}
 				if (empty($firstName) && !empty($lastName)) {
+				$sql = "SELECT * FROM $dbName.$outM WHERE `lastName` LIKE '$lastName%' ORDER BY `lastName`";
+				$result = $conn->query($sql);
+				$sql2 = "SELECT * FROM $dbName.$outF WHERE `lastName` LIKE '$lastName%' ORDER BY `lastName`";
+				$result2 = $conn->query($sql2);
+				echo print_r($result);
+				echo print_r($result2);
+				echo '<table>';
+					$sql3 = "SHOW COLUMNS FROM $outM";
+					$result3 = $conn->query($sql3);
+					echo '<tr>';
+					while ($row3 = $result3->fetch_assoc()) {
+						echo '<td>';
+						echo $row3["Field"];
+						echo '</td>';
+					}
+					echo '</tr>';
+					while ($row = $result->fetch_assoc()) {
+						$sql3 = "SHOW COLUMNS FROM $outM";
+						$result3 = $conn->query($sql3);
+						echo '<tr>';
+						while ($row3 = $result3->fetch_assoc()) {
+							echo '<td>';
+							echo $row[$row3["Field"]];
+							echo '</td>';
+						}
+						echo '</tr>';
+					}
+				echo '</table>';
+				echo '<table>';
+					$sql3 = "SHOW COLUMNS FROM $outF";
+					$result3 = $conn->query($sql3);
+					echo '<tr>';
+					while ($row3 = $result3->fetch_assoc()) {
+						echo '<td>';
+						echo $row3["Field"];
+						echo '</td>';
+					}
+					echo '</tr>';
+					while ($row2 = $result2->fetch_assoc()) {
+						$sql3 = "SHOW COLUMNS FROM $outF";
+						$result3 = $conn->query($sql3);
+						echo '<tr>';
+						while ($row3 = $result3->fetch_assoc()) {
+							echo '<td>';
+							echo $row2[$row3["Field"]];
+							echo '</td>';
+						}
+						echo '</tr>';
+					}
+				echo '</table>';	
+
 				}
 				else {
 				}
 			}
 		}
+//check out
+
 //close connection
       		$conn->close();
 		?>
