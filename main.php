@@ -239,7 +239,7 @@
   	        if ($conn->connect_error) {
      		      die("Connection failed: " . $conn->connect_error);
 		}
-//cron
+//"cron"
 	//correct in value for tables based on outM/F values.
 		$sql = "SELECT * FROM $outM";
 		$result = $conn->query($sql);
@@ -624,6 +624,7 @@
 					}
 				echo '</table>';
 				}
+				else {
 				if (empty($firstName) && !empty($lastName)) {
 				$sql = "SELECT * FROM $dbName.$outM WHERE `lastName` LIKE '$lastName%' ORDER BY `lastName`";
 				$result = $conn->query($sql);
@@ -676,10 +677,45 @@
 
 				}
 				else {
+					if (empty($firstName) && empty($lastName)) {
+					}
+					else {
+						echo 'Error: search failed for unknown reasons.';
+					}
+				}
 				}
 			}
 		}
 //check out
+		if ($_POST["formInit"] == "checkOut") {
+			if ($_POST["clothingItem"] == "pants") {
+				$sql = "SELECT `index`, `in` FROM hma.pants WHERE `index`=?";
+				$query = $conn->prepare($sql);
+				$indexPOST = (int) $_POST["index"];
+				$query->bind_param('i', $indexPOST);
+				$query->execute();
+				$result = $query->get_result();
+				$row = $result->fetch_assoc();
+				if (!empty($row["index"]) && $row["in"] == 't'){
+					$sql2 = "UPDATE `outM` SET `pants = ? WHERE `firstName = ? AND `lastName` = ?";
+					echo "success";
+				}
+				else {
+					echo "Pants #" . $_POST["index"] . " does not exist";
+				}
+			}
+			elseif ($_POST["clothingItem"] == "shirt") {
+			}
+			elseif ($_POST["clothingItem"] == "vest") {
+			}
+			elseif ($_POST["clothingItem"] == "jacket") {
+			}
+			elseif ($_POST["clothingItem"] == "dress") {
+			}
+			else {
+				echo 'Error: $formInit = "checkOut", $clothingItem did not trigger.';
+			}
+		}
 
 //close connection
       		$conn->close();
