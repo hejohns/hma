@@ -520,6 +520,7 @@
 		}
 //data manipulation AKA mainTop
 	//search 
+	//I would like to apologize for the monstrosity that  is below. I do not think cleaning it up would be a wise use of time at this point, since the search feature works as intended.
 		if ($_POST["formInit"] == "searchStudent") {
 			$firstName = $_POST["firstName"];
 			$lastName = $_POST["lastName"];
@@ -697,20 +698,216 @@
 				$result = $query->get_result();
 				$row = $result->fetch_assoc();
 				if (!empty($row["index"]) && $row["in"] == 't'){
-					$sql2 = "UPDATE `outM` SET `pants = ? WHERE `firstName = ? AND `lastName` = ?";
-					echo "success";
+					$sql2 = 'UPDATE hma.outM SET `pants` = ? WHERE `firstName` = ? AND `lastName` = ?';
+					$query2 = $conn->prepare($sql2);
+					$firstName_POST = (string)$_POST["firstName"];
+					$lastName_POST = (string) $_POST["lastName"];
+					$query2->bind_param('iss', $indexPOST, $firstName_POST, $lastName_POST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected rows affected!";
+					}
+					else {
+						echo "Success";
+					}
+					$query->close();
+					$query2->close();
+				}
+				elseif (!empty($row["index"]) && $row["in"] == 'f'){
+					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outM WHERE `pants` = ?";
+					$query3 = $conn->prepare($sql3);
+					$query3->bind_param('i', $indexPOST);
+					$query3->execute();
+					$result3 = $query3->get_result();
+					$row3 = $result3->fetch_assoc();
+					$query->close();
+					$query3->close();
+					echo "Pants #" . $_POST["index"] . " is currently checked out by " . $row3["firstName"] . " " . $row3["lastName"];
 				}
 				else {
+					$query->close();
 					echo "Pants #" . $_POST["index"] . " does not exist";
 				}
 			}
 			elseif ($_POST["clothingItem"] == "shirt") {
+				$sql = "SELECT `index`, `in` FROM hma.shirts WHERE `index`=?";
+				$query = $conn->prepare($sql);
+				$indexPOST = (int) $_POST["index"];
+				$query->bind_param('i', $indexPOST);
+				$query->execute();
+				$result = $query->get_result();
+				$row = $result->fetch_assoc();
+				if (!empty($row["index"]) && $row["in"] == 't'){
+					$sql2 = 'UPDATE hma.outM SET `shirt` = ? WHERE `firstName` = ? AND `lastName` = ?';
+					$query2 = $conn->prepare($sql2);
+					$firstName_POST = (string)$_POST["firstName"];
+					$lastName_POST = (string) $_POST["lastName"];
+					$query2->bind_param('iss', $indexPOST, $firstName_POST, $lastName_POST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected rows affected!";
+					}
+					else {
+						echo "Success";
+					}
+					$query->close();
+					$query2->close();
+				}
+				elseif (!empty($row["index"]) && $row["in"] == 'f'){
+					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outM WHERE `shirt` = ?";
+					$query3 = $conn->prepare($sql3);
+					$query3->bind_param('i', $indexPOST);
+					$query3->execute();
+					$result3 = $query3->get_result();
+					$row3 = $result3->fetch_assoc();
+					$query->close();
+					$query3->close();
+					echo "Shirt #" . $_POST["index"] . " is currently checked out by " . $row3["firstName"] . " " . $row3["lastName"];
+				}
+				else {
+					$query->close();
+					echo "Shirt #" . $_POST["index"] . " does not exist";
+				}
 			}
 			elseif ($_POST["clothingItem"] == "vest") {
+				$sql = "SELECT `index`, `in` FROM hma.vests WHERE `index`=?";
+				$query = $conn->prepare($sql);
+				$indexPOST = (int) $_POST["index"];
+				$query->bind_param('i', $indexPOST);
+				$query->execute();
+				$result = $query->get_result();
+				$row = $result->fetch_assoc();
+				if (!empty($row["index"]) && $row["in"] == 't'){
+					$sql2 = 'UPDATE hma.outM SET `vest` = ? WHERE `firstName` = ? AND `lastName` = ?';
+					$query2 = $conn->prepare($sql2);
+					$firstName_POST = (string)$_POST["firstName"];
+					$lastName_POST = (string) $_POST["lastName"];
+					$query2->bind_param('iss', $indexPOST, $firstName_POST, $lastName_POST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected rows affected!";
+					}
+					else {
+						echo "Success";
+					}
+					$query->close();
+					$query2->close();
+				}
+				elseif (!empty($row["index"]) && $row["in"] == 'f'){
+					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outM WHERE `vest` = ?";
+					$query3 = $conn->prepare($sql3);
+					$query3->bind_param('i', $indexPOST);
+					$query3->execute();
+					$result3 = $query3->get_result();
+					$row3 = $result3->fetch_assoc();
+					$query->close();
+					$query3->close();
+					echo "Vest #" . $_POST["index"] . " is currently checked out by " . $row3["firstName"] . " " . $row3["lastName"];
+				}
+				else {
+					$query->close();
+					echo "Vest #" . $_POST["index"] . " does not exist";
+				}
 			}
 			elseif ($_POST["clothingItem"] == "jacket") {
+				$sql = "SELECT `index`, `in` FROM hma.jackets WHERE `index`=?";
+				$query = $conn->prepare($sql);
+				$indexPOST = (int) $_POST["index"];
+				$query->bind_param('i', $indexPOST);
+				$query->execute();
+				$result = $query->get_result();
+				$row = $result->fetch_assoc();
+				if (!empty($row["index"]) && $row["in"] == 't'){
+					$sql2 = 'UPDATE hma.outM SET `jacket` = ? WHERE `firstName` = ? AND `lastName` = ?';
+					$query2 = $conn->prepare($sql2);
+					$firstName_POST = (string)$_POST["firstName"];
+					$lastName_POST = (string) $_POST["lastName"];
+					$query2->bind_param('iss', $indexPOST, $firstName_POST, $lastName_POST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected rows affected!";
+					}
+					else {
+						echo "Success";
+					}
+					$query->close();
+					$query2->close();
+				}
+				elseif (!empty($row["index"]) && $row["in"] == 'f'){
+					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outM WHERE `jacket` = ?";
+					$query3 = $conn->prepare($sql3);
+					$query3->bind_param('i', $indexPOST);
+					$query3->execute();
+					$result3 = $query3->get_result();
+					$row3 = $result3->fetch_assoc();
+					$query->close();
+					$query3->close();
+					echo "Jacket #" . $_POST["index"] . " is currently checked out by " . $row3["firstName"] . " " . $row3["lastName"];
+				}
+				else {
+					$query->close();
+					echo "Jacket #" . $_POST["index"] . " does not exist";
+				}
 			}
 			elseif ($_POST["clothingItem"] == "dress") {
+				$sql = "SELECT `index`, `in` FROM hma.dresses WHERE `index`=?";
+				$query = $conn->prepare($sql);
+				$indexPOST = (int) $_POST["index"];
+				$query->bind_param('i', $indexPOST);
+				$query->execute();
+				$result = $query->get_result();
+				$row = $result->fetch_assoc();
+				if (!empty($row["index"]) && $row["in"] == 't'){
+					$sql2 = 'UPDATE hma.outF SET `dress` = ? WHERE `firstName` = ? AND `lastName` = ?';
+					$query2 = $conn->prepare($sql2);
+					$firstName_POST = (string)$_POST["firstName"];
+					$lastName_POST = (string) $_POST["lastName"];
+					$query2->bind_param('iss', $indexPOST, $firstName_POST, $lastName_POST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected rows affected!";
+					}
+					else {
+						echo "Success";
+					}
+					$query->close();
+					$query2->close();
+				}
+				elseif (!empty($row["index"]) && $row["in"] == 'f'){
+					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outF WHERE `dress` = ?";
+					$query3 = $conn->prepare($sql3);
+					$query3->bind_param('i', $indexPOST);
+					$query3->execute();
+					$result3 = $query3->get_result();
+					$row3 = $result3->fetch_assoc();
+					$query->close();
+					$query3->close();
+					echo "Dress #" . $_POST["index"] . " is currently checked out by " . $row3["firstName"] . " " . $row3["lastName"];
+				}
+				else {
+					$query->close();
+					echo "Dress #" . $_POST["index"] . " does not exist";
+				}
 			}
 			else {
 				echo 'Error: $formInit = "checkOut", $clothingItem did not trigger.';
