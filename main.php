@@ -275,7 +275,7 @@
 				$result3 = $conn->query($sql3);
 		}
 		while ($row2 = $result9->fetch_assoc()){
-				$sql8 = "UPDATE hma.dresses SET `in`='f' WHERE `index`=" . $row2["dress"];
+				$sql8 = "UPDATE hma.dresses SET `in`='f' WHERE `index`=\"" . $row2["dress"] . "\"";
 				$result8 = $conn->query($sql8);
 		}
 //list outM alphabetical
