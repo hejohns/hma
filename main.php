@@ -138,6 +138,9 @@
 	    <div class="header">
 		<b>HMA INVENTORY SYSTEM</b>
 		<p>For assistance, contact Johnson He at [johnson.he2009@gmail.com] or [734-274-3757]</p>
+		<p>Checkout should be functioning properly. Ignore paid, it's a extraneous "feature". </p>
+		<p>Search works, probably? Haven't tried it after all the recent changes.</p>
+		<p>The buttons are mostly usless rn, but they work. </p>
 		<p>!Everything is lowercase!</p>
 	    </div>
 	    <div class="quickAccess">
@@ -199,6 +202,30 @@
 	    </div>
 	    <div class="main">
 		<div class="mainTop"> 
+		    <p>Multiple item check out</p>
+		    <form action="" method="POST">
+			<input type="hidden" name="formInit" value="multipleCheckOut">
+			M/F <select name="m/f">
+				<option value="male">Male</option>
+				<option value="female">Female</option>
+			</select>
+			<br>
+	              	First Name <input type="text" name="firstName" id="firstName" value="">
+			Last Name <input type="text" name="lastName" id="lastName" value="">
+			<br>
+			Pants <input type="text" name="pantsIndex" id="pantsIndex" value="">
+			<br>
+			Cummerbund <input type="text" name="cummerbundIndex" id="cummerbundIndex" value="">
+			<br>
+			Vest <input type="text" name="vestIndex" id="vestIndex" value="">
+			<br>
+			Jacket <input type="text" name="jacketIndex" id="jacketIndex" value="">
+			<br>
+			Dress <input type="text" name="dressIndex" id="dressIndex" value="">
+			<br>
+			<input type="submit">
+		    </form>
+		    <p>Single item check out</p>
           	    <form action="" method="POST">
                	     	<select name="formInit">
                	     	    <option value="checkOut">Check Out</option>
@@ -224,7 +251,7 @@
 					<option value="t">true</option>
 					<option value="f">false</option>
 				</select>
-			     <input type="submit">
+			<input type="submit">
 		    </form>
 		</div>
 		<div class="mainBottom">
@@ -525,6 +552,499 @@
   	                echo '</table>';
 		}
 //data manipulation AKA mainTop
+	//multiple line check out
+		if ($_POST["formInit"] == "multipleCheckOut"){
+			if ($_POST["m/f"] == "male"){
+				$itemLoopTrackerM = array(
+					0=>"pants",
+					1=>"cummerbund",
+					2=>"vest",
+					3=>"jacket",
+				);
+				for($index = 0;$index <= 3;$index++){
+				if ($itemLoopTrackerM[$index] == "pants") {
+				$sql = "SELECT * FROM hma.pants WHERE `index`=?";
+				$query = $conn->prepare($sql);
+				$indexPOST = (int) $_POST["pantsIndex"];
+				$query->bind_param('i', $indexPOST);
+				$query->execute();
+				$result = $query->get_result();
+				$row = $result->fetch_assoc();
+				$query->close();
+				$sql9 = "SELECT * FROM `outM` WHERE `firstName`=?  AND `lastName`=?";
+				$query9 = $conn->prepare($sql9);
+				$firstName_POST = (string) $_POST["firstName"];
+				$lastName_POST = (string) $_POST["lastName"];
+				$query9->bind_param('ss', $firstName_POST, $lastName_POST);
+				$query9->execute();
+				$result9 = $query9->get_result();
+				$row9 = $result9->fetch_assoc();
+				if (!empty($row["index"]) && $row["in"] == 't'){
+					if (!empty($row9["firstName"])){
+					$sql2 = 'UPDATE hma.outM SET `pants` = ? WHERE `firstName` = ? AND `lastName` = ?';
+					$query2 = $conn->prepare($sql2);
+					$firstName_POST = (string)$_POST["firstName"];
+					$lastName_POST = (string) $_POST["lastName"];
+					$query2->bind_param('iss', $indexPOST, $firstName_POST, $lastName_POST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected2 rows affected!";
+					}
+					else {
+						echo "Success";
+					}
+					}
+					elseif (empty($row9["firstName"])) {
+					$sql2 = "INSERT INTO `outM` (`firstName`, `lastName`, `pants`, `cummerbund`, `shirt`, `vest`, `jacket`, `paid`) VALUES (?, ?, ?, NULL, NULL, NULL, NULL, ?)";
+						$query2 = $conn->prepare($sql2);
+						$paidPOST = (string) $_POST["paid"];
+					$query2->bind_param('ssis', $firstName_POST, $lastName_POST, $indexPOST, $paidPOST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected2 rows affected!";
+					}
+					elseif ($rowsAffected2 == 1) {
+						echo "Success";
+					}
+					else {
+						echo "Error code 748";
+					}
+				}
+				else {
+					echo "Error code 749";
+				}
+					$query->close();
+					$query2->close();
+				}
+				elseif (!empty($row["index"]) && $row["in"] == 'f'){
+					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outM WHERE `pants` = ?";
+					$query3 = $conn->prepare($sql3);
+					$query3->bind_param('i', $indexPOST);
+					$query3->execute();
+					$result3 = $query3->get_result();
+					$row3 = $result3->fetch_assoc();
+					$query->close();
+					$query3->close();
+					echo "Pants #" . $_POST["pantsIndex"] . " is currently checked out by " . $row3["firstName"] . " " . $row3["lastName"];
+				}
+				else {
+					$query->close();
+					echo "Pants #" . $_POST["pantsIndex"] . " does not exist";
+				}
+			}
+			elseif ($itemLoopTrackerM[$index] == "shirt") {
+				$sql = "SELECT * FROM hma.shirts WHERE `index`=?";
+				$query = $conn->prepare($sql);
+				$indexPOST = (int) $_POST["shirtIndex"];
+				$query->bind_param('i', $indexPOST);
+				$query->execute();
+				$result = $query->get_result();
+				$row = $result->fetch_assoc();
+				$query->close();
+				$sql9 = "SELECT * FROM `outM` WHERE `firstName`=?  AND `lastName`=?";
+				$query9 = $conn->prepare($sql9);
+				$firstName_POST = (string) $_POST["firstName"];
+				$lastName_POST = (string) $_POST["lastName"];
+				$query9->bind_param('ss', $firstName_POST, $lastName_POST);
+				$query9->execute();
+				$result9 = $query9->get_result();
+				$row9 = $result9->fetch_assoc();
+				if (!empty($row["index"]) && $row["in"] == 't'){
+					if (!empty($row9["firstName"])){
+					$sql2 = 'UPDATE hma.outM SET `shirt` = ? WHERE `firstName` = ? AND `lastName` = ?';
+					$query2 = $conn->prepare($sql2);
+					$firstName_POST = (string)$_POST["firstName"];
+					$lastName_POST = (string) $_POST["lastName"];
+					$query2->bind_param('iss', $indexPOST, $firstName_POST, $lastName_POST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected2 rows affected!";
+					}
+					else {
+						echo "Success";
+					}
+					}
+					elseif (empty($row9["firstName"])) {
+					$sql2 = "INSERT INTO `outM` (`firstName`, `lastName`, `pants`, `cummerbund`, `shirt`, `vest`, `jacket`, `paid`) VALUES (?, ?, NULL, ?, NULL, NULL, NULL, ?)";
+						$query2 = $conn->prepare($sql2);
+						$paidPOST = (string) $_POST["paid"];
+					$query2->bind_param('ssis', $firstName_POST, $lastName_POST, $indexPOST, $paidPOST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected2 rows affected!";
+					}
+					elseif ($rowsAffected2 == 1) {
+						echo "Success";
+					}
+					else {
+						echo "Error code 748";
+					}
+				}
+				else {
+					echo "Error code 749";
+				}
+					$query->close();
+					$query2->close();
+				}
+				elseif (!empty($row["index"]) && $row["in"] == 'f'){
+					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outM WHERE `shirt` = ?";
+					$query3 = $conn->prepare($sql3);
+					$query3->bind_param('i', $indexPOST);
+					$query3->execute();
+					$result3 = $query3->get_result();
+					$row3 = $result3->fetch_assoc();
+					$query->close();
+					$query3->close();
+					echo "Shirt #" . $_POST["shirtIndex"] . " is currently checked out by " . $row3["firstName"] . " " . $row3["lastName"];
+				}
+				else {
+					$query->close();
+					echo "Shirt #" . $_POST["shirtIndex"] . " does not exist";
+				}
+			}
+			elseif ($itemLoopTrackerM[$index] == "cummerbund") {
+				$sql = "SELECT * FROM hma.cummerbunds WHERE `index`=?";
+				$query = $conn->prepare($sql);
+				$indexPOST = (int) $_POST["cummerBundIndex"];
+				$query->bind_param('i', $indexPOST);
+				$query->execute();
+				$result = $query->get_result();
+				$row = $result->fetch_assoc();
+				$query->close();
+				$sql9 = "SELECT * FROM `outM` WHERE `firstName`=?  AND `lastName`=?";
+				$query9 = $conn->prepare($sql9);
+				$firstName_POST = (string) $_POST["firstName"];
+				$lastName_POST = (string) $_POST["lastName"];
+				$query9->bind_param('ss', $firstName_POST, $lastName_POST);
+				$query9->execute();
+				$result9 = $query9->get_result();
+				$row9 = $result9->fetch_assoc();
+				if (!empty($row["index"]) && $row["in"] == 't'){
+					if (!empty($row9["firstName"])){
+					$sql2 = 'UPDATE hma.outM SET `cummerbund` = ? WHERE `firstName` = ? AND `lastName` = ?';
+					$query2 = $conn->prepare($sql2);
+					$firstName_POST = (string)$_POST["firstName"];
+					$lastName_POST = (string) $_POST["lastName"];
+					$query2->bind_param('iss', $indexPOST, $firstName_POST, $lastName_POST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected2 rows affected!";
+					}
+					else {
+						echo "Success";
+					}
+					}
+					elseif (empty($row9["firstName"])) {
+					$sql2 = "INSERT INTO `outM` (`firstName`, `lastName`, `pants`, `cummerbund`, `shirt`, `vest`, `jacket`, `paid`) VALUES (?, ?, NULL, ?, NULL, NULL, NULL, ?)";
+						$query2 = $conn->prepare($sql2);
+						$paidPOST = (string) $_POST["paid"];
+					$query2->bind_param('ssis', $firstName_POST, $lastName_POST, $indexPOST, $paidPOST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected2 rows affected!";
+					}
+					elseif ($rowsAffected2 == 1) {
+						echo "Success";
+					}
+					else {
+						echo "Error code 748";
+					}
+				}
+				else {
+					echo "Error code 749";
+				}
+					$query->close();
+					$query2->close();
+				}
+				elseif (!empty($row["index"]) && $row["in"] == 'f'){
+					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outM WHERE `cummerbund` = ?";
+					$query3 = $conn->prepare($sql3);
+					$query3->bind_param('i', $indexPOST);
+					$query3->execute();
+					$result3 = $query3->get_result();
+					$row3 = $result3->fetch_assoc();
+					$query->close();
+					$query3->close();
+					echo "Cummerbund #" . $_POST["cummerbundIndex"] . " is currently checked out by " . $row3["firstName"] . " " . $row3["lastName"];
+				}
+				else {
+					$query->close();
+					echo "Cummerbund #" . $_POST["cummerbundIndex"] . " does not exist";
+				}
+			}
+			elseif ($itemLoopTrackerM[$index] == "vest") {
+				$sql = "SELECT * FROM hma.vests WHERE `index`=?";
+				$query = $conn->prepare($sql);
+				$indexPOST = (int) $_POST["vestIndex"];
+				$query->bind_param('i', $indexPOST);
+				$query->execute();
+				$result = $query->get_result();
+				$row = $result->fetch_assoc();
+				$query->close();
+				$sql9 = "SELECT * FROM `outM` WHERE `firstName`=?  AND `lastName`=?";
+				$query9 = $conn->prepare($sql9);
+				$firstName_POST = (string) $_POST["firstName"];
+				$lastName_POST = (string) $_POST["lastName"];
+				$query9->bind_param('ss', $firstName_POST, $lastName_POST);
+				$query9->execute();
+				$result9 = $query9->get_result();
+				$row9 = $result9->fetch_assoc();
+				if (!empty($row["index"]) && $row["in"] == 't'){
+					if (!empty($row9["firstName"])){
+					$sql2 = 'UPDATE hma.outM SET `vest` = ? WHERE `firstName` = ? AND `lastName` = ?';
+					$query2 = $conn->prepare($sql2);
+					$firstName_POST = (string)$_POST["firstName"];
+					$lastName_POST = (string) $_POST["lastName"];
+					$query2->bind_param('iss', $indexPOST, $firstName_POST, $lastName_POST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected2 rows affected!";
+					}
+					else {
+						echo "Success";
+					}
+					}
+					elseif (empty($row9["firstName"])) {
+					$sql2 = "INSERT INTO `outM` (`firstName`, `lastName`, `pants`, `cummerbund`, `shirt`, `vest`, `jacket`, `paid`) VALUES (?, ?, NULL, NULL, NULL, ?, NULL, ?)";
+						$query2 = $conn->prepare($sql2);
+						$paidPOST = (string) $_POST["paid"];
+					$query2->bind_param('ssis', $firstName_POST, $lastName_POST, $indexPOST, $paidPOST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected2 rows affected!";
+					}
+					elseif ($rowsAffected2 == 1) {
+						echo "Success";
+					}
+					else {
+						echo "Error code 748";
+					}
+				}
+				else {
+					echo "Error code 749";
+				}
+					$query->close();
+					$query2->close();
+				}
+				elseif (!empty($row["index"]) && $row["in"] == 'f'){
+					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outM WHERE `vest` = ?";
+					$query3 = $conn->prepare($sql3);
+					$query3->bind_param('i', $indexPOST);
+					$query3->execute();
+					$result3 = $query3->get_result();
+					$row3 = $result3->fetch_assoc();
+					$query->close();
+					$query3->close();
+					echo "Vest #" . $_POST["vestIndex"] . " is currently checked out by " . $row3["firstName"] . " " . $row3["lastName"];
+				}
+				else {
+					$query->close();
+					echo "Vest #" . $_POST["vestIndex"] . " does not exist";
+				}
+			}
+			elseif ($itemLoopTrackerM[$index] == "jacket") {
+				$sql = "SELECT * FROM hma.jackets WHERE `index`=?";
+				$query = $conn->prepare($sql);
+				$indexPOST = (string) $_POST["jacketIndex"];
+				$query->bind_param('s', $indexPOST);
+				$query->execute();
+				$result = $query->get_result();
+				$row = $result->fetch_assoc();
+				$query->close();
+				$sql9 = "SELECT * FROM `outM` WHERE `firstName`=?  AND `lastName`=?";
+				$query9 = $conn->prepare($sql9);
+				$firstName_POST = (string) $_POST["firstName"];
+				$lastName_POST = (string) $_POST["lastName"];
+				$query9->bind_param('ss', $firstName_POST, $lastName_POST);
+				$query9->execute();
+				$result9 = $query9->get_result();
+				$row9 = $result9->fetch_assoc();
+				if (!empty($row["index"]) && $row["in"] == 't'){
+					if (!empty($row9["firstName"])){
+					$sql2 = 'UPDATE hma.outM SET `jacket` = ? WHERE `firstName` = ? AND `lastName` = ?';
+					$query2 = $conn->prepare($sql2);
+					$firstName_POST = (string)$_POST["firstName"];
+					$lastName_POST = (string) $_POST["lastName"];
+					$query2->bind_param('sss', $indexPOST, $firstName_POST, $lastName_POST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected2 rows affected!";
+					}
+					else {
+						echo "Success";
+					}
+					}
+					elseif (empty($row9["firstName"])) {
+					$sql2 = "INSERT INTO `outM` (`firstName`, `lastName`, `pants`, `cummerbund`, `shirt`, `vest`, `jacket`, `paid`) VALUES (?, ?, NULL, NULL, NULL, NULL, ?, ?)";
+						$query2 = $conn->prepare($sql2);
+						$paidPOST = (string) $_POST["paid"];
+					$query2->bind_param('ssss', $firstName_POST, $lastName_POST, $indexPOST, $paidPOST);
+					$query2->execute();
+					$rowsAffected2 = $query2->affected_rows;
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected2 rows affected!";
+					}
+					elseif ($rowsAffected2 == 1) {
+						echo "Success";
+					}
+					else {
+						echo "Error code 748";
+					}
+				}
+				else {
+					echo "Error code 749";
+				}
+					$query->close();
+					$query2->close();
+				}
+				elseif (!empty($row["index"]) && $row["in"] == 'f'){
+					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outM WHERE `jacket` = ?";
+					$query3 = $conn->prepare($sql3);
+					$query3->bind_param('s', $indexPOST);
+					$query3->execute();
+					$result3 = $query3->get_result();
+					$row3 = $result3->fetch_assoc();
+					$query->close();
+					$query3->close();
+					echo "Jacket #" . $_POST["jacketIndex"] . " is currently checked out by " . $row3["firstName"] . " " . $row3["lastName"];
+				}
+				else {
+					$query->close();
+					echo "Jacket #" . $_POST["jacketIndex"] . " does not exist";
+				}
+			}
+						else {
+				echo 'Error: $formInit = "checkOut", $clothingItem did not trigger.';
+			}
+
+				echo '<br>';
+				}
+			}
+			if ($_POST["m/f"] == "female"){
+				$sql = "SELECT `index`, `in` FROM hma.dresses WHERE `index`=?";
+				$query = $conn->prepare($sql);
+				$indexPOST = (string) $_POST["dressIndex"];
+				$query->bind_param('s', $indexPOST);
+				$query->execute();
+				$result = $query->get_result();
+				$row = $result->fetch_assoc();
+				$sql9 = "SELECT * FROM hma.outF WHERE `firstName` = ?  AND `lastName` = ?";
+				$query9 = $conn->prepare($sql9);
+				$query9->bind_param('ss', $indexPOST, $_POST["lastName"]);
+				$query9->execute();
+				$result9 = $query9->get_result();
+				$existingEntry = $result9->num_rows;
+				$query9->close();
+				if ((!empty($row["index"]) && $row["in"] == 't')){
+					$sql4 = "DELETE FROM `outF` WHERE `firstName` = ? AND `lastName` = ?";
+					$query4 = $conn->prepare($sql4);
+					$query4->bind_param('ss', $_POST["firstName"], $_POST["lastName"]);
+					$query4->execute();
+					$query4->close();
+					$sql2 = "INSERT INTO `outF` VALUES (?, ?, ?, 't')";
+					$query2 = $conn->prepare($sql2);
+					$query2->bind_param('sss', $_POST["firstName"], $_POST["lastName"], $_POST["dressIndex"]);
+					$query2->execute();
+					$query->close();
+					$rowsAffected2 = $query2->affected_rows;
+					$query2->close();
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected2 rows affected!";
+					}
+					elseif ($rowsAffected2 == 1) {
+						echo "Success";
+					}
+					else {
+						echo "$rowsAffected2 rows affected!";
+					}
+				}
+				elseif ((!empty($row["index"]) && $row["in"] == 'f') && (empty($existingEntry)) ){
+					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outF WHERE `dress` = ?";
+					$query3 = $conn->prepare($sql3);
+					$query3->bind_param('s', $indexPOST);
+					$query3->execute();
+					$result3 = $query3->get_result();
+					$row3 = $result3->fetch_assoc();
+					$query->close();
+					$query3->close();
+					echo "Dress #" . $_POST["dressIndex"] . " is currently checked out by " . $row3["firstName"] . " " . $row3["lastName"];
+				}
+				elseif ((!empty($row["index"]) && $row["in"] == 'f') && (!empty($existingEntry)) ){
+					$sql4 = "DELETE FROM `outF` WHERE `firstName` = ? AND `lastName` = ?";
+					$query4 = $conn->prepare($sql4);
+					$query4->bind_param('ss', $_POST["firstName"], $_POST["lastName"]);
+					$query4->execute();
+					$query4->close();
+					$sql2 = "INSERT INTO `outF` VALUES (?, ?, ?, ?)";
+					$query2 = $conn->prepare($sql2);
+					$query2->bind_param('ssss', $_POST["firstName"], $_POST["lastName"], $_POST["dressIndex"], $_POST["paid"]);
+					$query2->execute();
+					$query->close();
+					$rowsAffected2 = $query2->affected_rows;
+					$query2->close();
+					if ($rowsAffected2 == 0) {
+						echo "Failed";
+					}
+					elseif ($rowsAffected2 > 1) {
+						echo "$rowsAffected2 rows affected!";
+					}
+					elseif ($rowsAffected2 == 1) {
+						echo "Success";
+					}
+					else {
+						echo "$rowsAffected2 rows affected!2";
+					}
+
+				}
+				else {
+					$query->close();
+					echo "Dress #" . $_POST["dressIndex"] . " does not exist";
+				}
+
+			}
+		} 
 	//search 
 	//I would like to apologize for the monstrosity that  is below. I do not think cleaning it up would be a wise use of time at this point, since the search feature works as intended.
 		if ($_POST["formInit"] == "searchStudent") {
@@ -742,7 +1262,7 @@
 						echo "Failed";
 					}
 					elseif ($rowsAffected2 > 1) {
-						echo "$rowsAffected rows affected!";
+						echo "$rowsAffected2 rows affected!";
 					}
 					elseif ($rowsAffected2 == 1) {
 						echo "Success";
@@ -820,7 +1340,7 @@
 						echo "Failed";
 					}
 					elseif ($rowsAffected2 > 1) {
-						echo "$rowsAffected rows affected!";
+						echo "$rowsAffected2 rows affected!";
 					}
 					elseif ($rowsAffected2 == 1) {
 						echo "Success";
@@ -898,7 +1418,7 @@
 						echo "Failed";
 					}
 					elseif ($rowsAffected2 > 1) {
-						echo "$rowsAffected rows affected!";
+						echo "$rowsAffected2 rows affected!";
 					}
 					elseif ($rowsAffected2 == 1) {
 						echo "Success";
@@ -976,7 +1496,7 @@
 						echo "Failed";
 					}
 					elseif ($rowsAffected2 > 1) {
-						echo "$rowsAffected rows affected!";
+						echo "$rowsAffected2 rows affected!";
 					}
 					elseif ($rowsAffected2 == 1) {
 						echo "Success";
@@ -992,7 +1512,7 @@
 					$query2->close();
 				}
 				elseif (!empty($row["index"]) && $row["in"] == 'f'){
-					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outM WHERE `pants` = ?";
+					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outM WHERE `vest` = ?";
 					$query3 = $conn->prepare($sql3);
 					$query3->bind_param('i', $indexPOST);
 					$query3->execute();
@@ -1054,7 +1574,7 @@
 						echo "Failed";
 					}
 					elseif ($rowsAffected2 > 1) {
-						echo "$rowsAffected rows affected!";
+						echo "$rowsAffected2 rows affected!";
 					}
 					elseif ($rowsAffected2 == 1) {
 						echo "Success";
@@ -1070,7 +1590,7 @@
 					$query2->close();
 				}
 				elseif (!empty($row["index"]) && $row["in"] == 'f'){
-					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outM WHERE `pants` = ?";
+					$sql3 = "SELECT `firstName`, `lastName` FROM hma.outM WHERE `jacket` = ?";
 					$query3 = $conn->prepare($sql3);
 					$query3->bind_param('s', $indexPOST);
 					$query3->execute();
@@ -1117,13 +1637,13 @@
 						echo "Failed";
 					}
 					elseif ($rowsAffected2 > 1) {
-						echo "$rowsAffected rows affected!";
+						echo "$rowsAffected2 rows affected!";
 					}
 					elseif ($rowsAffected2 == 1) {
 						echo "Success";
 					}
 					else {
-						echo "Unknown Behavior";
+						echo "$rowsAffected2 rows affected!";
 					}
 				}
 				elseif ((!empty($row["index"]) && $row["in"] == 'f') && (empty($existingEntry)) ){
@@ -1154,13 +1674,13 @@
 						echo "Failed";
 					}
 					elseif ($rowsAffected2 > 1) {
-						echo "$rowsAffected rows affected!";
+						echo "$rowsAffected2 rows affected!";
 					}
 					elseif ($rowsAffected2 == 1) {
 						echo "Success";
 					}
 					else {
-						echo "Unknown Behavior";
+						echo "$rowsAffected2 rows affected!";
 					}
 
 				}
